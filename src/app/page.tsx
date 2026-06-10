@@ -59,6 +59,21 @@ function BeforeAfterCard({ video, beforeImage, afterImage }: { video?: string; b
   );
 }
 
+type SlideStyle = {
+  objectFit: "cover" | "contain";
+  objectPosition?: string;
+  transform?: string;
+  padding?: number;
+};
+
+const slideStyles: Record<string, SlideStyle> = {
+  "merch-bpopen-poster.png": { objectFit: "cover", objectPosition: "top", transform: "scale(1.3)" },
+  "merch-harding.png": { objectFit: "cover", objectPosition: "50% 30%", transform: "scale(0.7)" },
+  "merch-bropen-logo.png": { objectFit: "cover", objectPosition: "center", transform: "scale(1.2)" },
+  "merch-cubes.png": { objectFit: "cover", objectPosition: "center", transform: "scale(1.2)" },
+  "Creeper_Minecraft.png": { objectFit: "cover", objectPosition: "50% 55%", transform: "scale(0.8)" },
+};
+
 function SlideshowCard({ images }: { images: string[] }) {
   const [idx, setIdx] = useState(0);
 
@@ -70,41 +85,48 @@ function SlideshowCard({ images }: { images: string[] }) {
   }, [images.length]);
 
   return (
-    <div className="relative w-full h-full bg-white">
-      {images.map((src, i) => (
-        <img
-          key={src}
-          src={`/${src}`}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover rounded-md transition-opacity duration-700"
-          style={{ opacity: i === idx ? 1 : 0 }}
-        />
-      ))}
+    <div className="relative w-full h-full" style={{ overflow: "hidden", borderRadius: 6, border: "1px solid #e5e5e5" }}>
+      {images.map((src, i) => {
+        const s = slideStyles[src] || { objectFit: "cover" as const, transform: "scale(1.2)" };
+        return (
+          <img
+            key={src}
+            src={`/${src}`}
+            alt=""
+            className="absolute inset-0 w-full h-full transition-opacity duration-700"
+            style={{
+              opacity: i === idx ? 1 : 0,
+              objectFit: s.objectFit,
+              objectPosition: s.objectPosition || "center",
+              transform: s.transform || "none",
+            }}
+          />
+        );
+      })}
     </div>
   );
 }
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center px-6 py-24 md:py-32">
+    <main className="min-h-screen flex flex-col items-center px-8 pt-16 pb-12 md:px-32 md:pt-24 lg:px-48">
       {/* ─── NAME ─── */}
-      <h1 className="font-display text-[clamp(48px,10vw,80px)] leading-[0.95] tracking-tight text-center">
+      <h1 className="font-display" style={{ fontSize: "clamp(36px,8vw,80px)", lineHeight: 0.95, letterSpacing: "-0.02em", textAlign: "center" }}>
         <span className="block">Sanchita</span>
-        <span className="block">Chamberlain</span>
       </h1>
 
       {/* ─── BIO ─── */}
-      <p className="mt-10 max-w-[520px] text-center font-serif text-[clamp(16px,2vw,20px)] leading-relaxed text-black/80">
+      <p className="font-serif" style={{ marginTop: 48, maxWidth: 480, textAlign: "center", fontSize: "clamp(14px,1.8vw,18px)", lineHeight: 1.7, color: "rgba(0,0,0,0.8)" }}>
         {about.statement}
       </p>
 
       {/* ─── LINKS ─── */}
-      <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-2">
+      <div style={{ marginTop: 32, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px 40px" }}>
         <a
           href={`mailto:${links.email}`}
           className="font-mono text-[13px] text-black/50 hover:text-black transition-colors underline underline-offset-4 decoration-black/20 hover:decoration-black/50"
         >
-          Email
+          Email ↗
         </a>
         <a
           href={links.linkedin}
@@ -112,21 +134,21 @@ export default function Home() {
           rel="noopener noreferrer"
           className="font-mono text-[13px] text-black/50 hover:text-black transition-colors underline underline-offset-4 decoration-black/20 hover:decoration-black/50"
         >
-          LinkedIn
+          LinkedIn ↗
         </a>
         <a
-          href={links.resume}
+          href="/resume"
           className="font-mono text-[13px] text-black/50 hover:text-black transition-colors underline underline-offset-4 decoration-black/20 hover:decoration-black/50"
         >
-          Resume
+          Resume →
         </a>
       </div>
 
       {/* ─── WORK ─── */}
-      <section className="mt-32 w-full max-w-[720px]">
-        <div className="grid grid-cols-2 gap-6">
+      <section className="mt-16 md:mt-24 w-full" style={{ maxWidth: 896 }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((p, i) => (
-            <div key={i} className="aspect-[4/3] bg-white border border-neutral-200 rounded-md flex items-center justify-center overflow-hidden">
+            <div key={i} className={`aspect-[4/3] bg-white rounded-md flex items-center justify-center overflow-hidden ${p.slideshow ? '' : 'border border-neutral-200'}`}>
               {p.diagram === "fastly-conversion" ? (
                 <FastlyConversionDiagram compact />
               ) : p.slideshow ? (
@@ -173,7 +195,7 @@ export default function Home() {
       </section>
 
       {/* ─── FOOTER ─── */}
-      <footer className="mt-28 pt-8 border-t border-black/10 w-full max-w-[720px] text-center">
+      <footer className="w-full" style={{ marginTop: 64, paddingTop: 32, paddingBottom: 48, borderTop: "1px solid rgba(0,0,0,0.1)", maxWidth: 896, textAlign: "center" }}>
         <p className="font-mono text-[11px] text-black/30">
           Sanchita Chamberlain · {new Date().getFullYear()}
         </p>

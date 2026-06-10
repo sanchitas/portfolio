@@ -22,7 +22,7 @@ export const links = {
 
 export const about = {
   statement:
-    "Product designer, Bay Area. Leading design for Terraform Registry at IBM (ex-HashiCorp). Previously Fastly. Started in systems engineering — Zurich Insurance, TSYS, Johnson & Johnson.",
+    "Product designer in the Bay Area, currently leading design for the Terraform Registry at IBM (ex-HashiCorp). Previously at Fastly. Started in systems engineering — Zurich Insurance, TSYS, Johnson & Johnson.",
   details: {
     currently:
       "Lead Product Designer, HashiCorp (IBM)\nTerraform Registry · Publisher Experience",
@@ -145,7 +145,7 @@ export const projects: Project[] = [
     description:
       "Logos, event posters, and brand identity work — disc golf tournaments, local businesses, and community projects.",
     tags: ["Brand", "Illustration"],
-    slideshow: ["merch-bpopen-poster.png", "merch-harding.png", "merch-bropen-logo.png", "merch-cubes.png"],
+    slideshow: ["merch-bpopen-poster.png", "merch-harding.png", "merch-bropen-logo.png", "merch-cubes.png", "Creeper_Minecraft.png"],
     placeholder: "Merch and brand design slideshow",
   },
   {

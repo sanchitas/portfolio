@@ -8,15 +8,15 @@ export const metadata: Metadata = {
 
 export default function ResumePage() {
   return (
-    <main className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8 print:py-0 print:px-0">
-      <div className="max-w-[760px] mx-auto">
+    <main className="min-h-screen bg-white px-5 py-12 sm:px-10 sm:py-16 print:!p-0" style={{ backgroundImage: "none" }}>
+      <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
-        <header className="mb-8 print:mb-6">
-          <h1 className="font-display text-5xl sm:text-6xl tracking-tight text-black uppercase print:text-4xl">
+        <header style={{ marginBottom: 32 }}>
+          <h1 className="font-display" style={{ fontSize: "clamp(32px, 8vw, 48px)", letterSpacing: "-0.02em", color: "#000", textTransform: "uppercase", margin: 0 }}>
             Sanchita Chamberlain
           </h1>
-          <p className="mt-2 font-mono text-sm text-neutral-600 tracking-wide">
-            <span className="font-semibold text-black">Lead Product Designer</span>
+          <p className="font-mono" style={{ marginTop: 10, fontSize: 13, color: "#666", letterSpacing: "0.02em" }}>
+            <span style={{ fontWeight: 600, color: "#000" }}>Lead Product Designer</span>
             {" · "}
             <a
               href="mailto:sanchitachamberlain@gmail.com"
@@ -36,28 +36,27 @@ export default function ResumePage() {
           </p>
         </header>
 
-        <hr className="border-neutral-200 mb-8 print:mb-6" />
+        <hr style={{ border: "none", borderTop: "1px solid #e5e5e5", marginBottom: 40 }} />
 
         {/* Experience */}
-        <section className="mb-10 print:mb-6">
-          <h2 className="font-display text-2xl tracking-tight text-black uppercase mb-6 print:mb-4">
+        <section style={{ marginBottom: 48 }}>
+          <h2 className="font-display" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 32 }}>
             Experience
           </h2>
 
-          {/* HashiCorp / IBM */}
-          <div className="mb-8 print:mb-5">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 mb-3">
-              <h3 className="font-mono text-sm font-semibold text-black">
+          <div style={{ marginBottom: 48 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
+              <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "#000", margin: 0 }}>
                 HashiCorp / IBM
-                <span className="font-normal text-neutral-500">
+                <span style={{ fontWeight: 400, color: "#888" }}>
                   {" · "}Lead Product Designer
                 </span>
               </h3>
-              <span className="font-mono text-xs text-neutral-400">
+              <span className="font-mono" style={{ fontSize: 12, color: "#aaa" }}>
                 Feb 2023 – Present
               </span>
             </div>
-            <ul className="space-y-2.5">
+            <ul style={{ listStyleType: "disc", paddingLeft: 24, margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
               <Li>
                 Turned rough enterprise requirements into three phased deliverables
                 (usage → visibility → ownership), shipping two phases in two quarters
@@ -105,20 +104,19 @@ export default function ResumePage() {
             </ul>
           </div>
 
-          {/* Fastly */}
-          <div className="mb-8 print:mb-5">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 mb-3">
-              <h3 className="font-mono text-sm font-semibold text-black">
+          <div style={{ marginBottom: 48 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
+              <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "#000", margin: 0 }}>
                 Fastly
-                <span className="font-normal text-neutral-500">
+                <span style={{ fontWeight: 400, color: "#888" }}>
                   {" · "}Senior Product Designer
                 </span>
               </h3>
-              <span className="font-mono text-xs text-neutral-400">
+              <span className="font-mono" style={{ fontSize: 12, color: "#aaa" }}>
                 Jan 2017 – Feb 2023
               </span>
             </div>
-            <ul className="space-y-2.5">
+            <ul style={{ listStyleType: "disc", paddingLeft: 24, margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
               <Li>
                 Doubled sign-up conversion from <Metric>13.6% to 26.5%</Metric> YoY
                 by separating conflicting sales lead-gen and self-serve flows; informed
@@ -149,33 +147,35 @@ export default function ResumePage() {
 
         {/* Education */}
         <section>
-          <h2 className="font-display text-2xl tracking-tight text-black uppercase mb-4 print:mb-3">
+          <h2 className="font-display" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 16 }}>
             Education
           </h2>
-          <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-            <h3 className="font-mono text-sm font-semibold text-black">
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px" }}>
+            <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "#000", margin: 0 }}>
               B.S. Industrial & Systems Engineering
-              <span className="font-normal text-neutral-500">
+              <span style={{ fontWeight: 400, color: "#888" }}>
                 {" — "}Rutgers University
               </span>
             </h3>
           </div>
-          <p className="font-mono text-xs text-neutral-500 mt-1">
+          <p className="font-mono" style={{ fontSize: 12, color: "#888", marginTop: 6 }}>
             Co-op: Johnson & Johnson · Internship: TSYS
           </p>
         </section>
 
         {/* Print / download footer */}
-        <div className="mt-12 pt-6 border-t border-neutral-100 flex items-center justify-between print:hidden">
+        <div style={{ marginTop: 48, paddingTop: 24, borderTop: "1px solid #f0f0f0", display: "flex", alignItems: "center", justifyContent: "space-between" }} className="print:!hidden">
           <a
             href="/"
-            className="font-mono text-xs text-neutral-400 hover:text-black transition-colors"
+            className="font-mono"
+            style={{ fontSize: 12, color: "#aaa" }}
           >
             ← Back to portfolio
           </a>
           <a
             href="/resume.pdf"
-            className="font-mono text-xs text-neutral-400 hover:text-black transition-colors"
+            className="font-mono"
+            style={{ fontSize: 12, color: "#aaa" }}
           >
             Download PDF ↓
           </a>
@@ -189,7 +189,7 @@ export default function ResumePage() {
 
 function Li({ children }: { children: React.ReactNode }) {
   return (
-    <li className="font-mono text-[13px] leading-relaxed text-neutral-700 pl-4 relative before:content-['–'] before:absolute before:left-0 before:text-neutral-300 print:text-[11px] print:leading-snug">
+    <li className="font-mono" style={{ fontSize: 13, lineHeight: 1.8, color: "#444", margin: 0, padding: 0 }}>
       {children}
     </li>
   );
