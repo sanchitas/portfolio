@@ -90,7 +90,9 @@ export default function ResumePage() {
                 prioritization; infrastructure inherited by newly hired UXR team
               </Li>
               <Li>
-                Defined registry unification strategy; got buy-in from leadership,
+                Defined registry unification strategy for a platform serving{" "}
+                <Metric>1M+ monthly visitors</Metric> and{" "}
+                <Metric>16B all-time downloads</Metric>; got buy-in from leadership,
                 shipped a public registry reskin in{" "}
                 <Metric>under 2 weeks</Metric> with coding agents, then mocked the
                 authenticated vision that became new hire and intern projects
