@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { links, projects } from "@/content";
+import { links, projects, about } from "@/content";
 import FastlyConversionDiagram from "@/components/FastlyConversionDiagram";
 
 function BeforeAfterCard({ video, beforeImage, afterImage }: { video?: string; beforeImage: string; afterImage?: string }) {
@@ -95,17 +95,11 @@ export default function Home() {
 
       {/* ─── BIO ─── */}
       <p className="mt-10 max-w-[520px] text-center font-serif text-[clamp(16px,2vw,20px)] leading-relaxed text-black/80">
-        I&apos;m a product designer (& sometimes engineer) based in the Bay Area.
-        Currently, I&apos;m leading design on the Terraform Registry at{" "}
-        <span className="tracking-[0.12em] font-mono text-[0.85em]">IBM (HashiCorp)</span>.
-        Before that, I was a product designer at{" "}
-        <span className="tracking-[0.12em] font-mono text-[0.85em]">Fastly</span>,
-        where I doubled sign-up conversion and redesigned RBAC from the ground up.
-        I studied Industrial &amp; Systems Engineering at Rutgers.
+        {about.statement}
       </p>
 
       {/* ─── LINKS ─── */}
-      <div className="mt-14 flex flex-wrap justify-center gap-x-8 gap-y-2">
+      <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-2">
         <a
           href={`mailto:${links.email}`}
           className="font-mono text-[13px] text-black/50 hover:text-black transition-colors underline underline-offset-4 decoration-black/20 hover:decoration-black/50"

@@ -22,7 +22,7 @@ export const links = {
 
 export const about = {
   statement:
-    "Most effective when embedded with engineering and product. I design the system around the product — the phasing, the architecture, the cross-functional alignment that makes it shippable.",
+    "Product designer, Bay Area. Leading design for Terraform Registry at IBM (ex-HashiCorp). Previously Fastly. Started in systems engineering — Zurich Insurance, TSYS, Johnson & Johnson.",
   details: {
     currently:
       "Lead Product Designer, HashiCorp (IBM)\nTerraform Registry · Publisher Experience",
