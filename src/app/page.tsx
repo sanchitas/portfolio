@@ -109,7 +109,7 @@ function SlideshowCard({ images }: { images: string[] }) {
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center px-8 pt-16 pb-12 md:px-32 md:pt-24 lg:px-48">
+    <main className="animate-gutter flex flex-col items-center px-8 pt-16 pb-12 md:px-32 md:pt-24 lg:px-48">
       {/* ─── NAME ─── */}
       <h1 className="font-display" style={{ fontSize: "clamp(36px,8vw,80px)", lineHeight: 0.95, letterSpacing: "-0.02em", textAlign: "center" }}>
         <span className="block">Sanchita</span>
