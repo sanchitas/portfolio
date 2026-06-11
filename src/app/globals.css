@@ -12,42 +12,45 @@
 
 html {
   scroll-behavior: smooth;
-  background: #000;
+  background: #1e3a14; /* grass green — visible on overscroll */
 }
 
 body {
-  background-color: #fff;
+  background-color: transparent;
   color: #111;
   font-family: var(--font-dm-mono), monospace;
   font-weight: 300;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Animated gutter — content insets from viewport edge on load */
-@property --g {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
+/* Pool block positioning — responsive */
+.pool-block-section {
+  padding-left: calc(var(--block-offset, 10vw) * 0.3 + 5vw);
 }
-
-@keyframes gutter-in {
-  0%   { --g: 0px; }
-  100% { --g: var(--gutter); }
-}
-
-.animate-gutter {
-  --gutter: 12px;
-  animation: gutter-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
-  margin: var(--g);
-  border-radius: var(--g);
-  min-height: calc(100vh - 2 * var(--g));
-}
-
-@media (min-width: 48rem) {
-  .animate-gutter {
-    --gutter: 16px;
+@media (min-width: 768px) {
+  .pool-block-section {
+    padding-left: var(--block-offset, 10vw);
   }
+}
+
+/* Caustic shimmer on submerged blocks */
+.caustic-shimmer {
+  background: linear-gradient(
+    135deg,
+    transparent 20%,
+    rgba(0, 200, 130, 0.12) 35%,
+    transparent 50%,
+    rgba(0, 200, 130, 0.08) 65%,
+    transparent 80%
+  );
+  background-size: 400% 400%;
+  animation: shimmer-move 5s ease-in-out infinite;
+  mix-blend-mode: overlay;
+}
+
+@keyframes shimmer-move {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
