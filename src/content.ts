@@ -158,7 +158,7 @@ export const projects: Project[] = [
       "Designed the end-to-end publish flow for Terraform Stacks — enabling teams to share and consume reusable infrastructure configurations as a first-class product experience. The consumption model at the heart of the Stacks ecosystem.",
     tags: ["0→1", "Developer Experience"],
     video: "stack-publish.mp4",
-    link: "https://developer.hashicorp.com/terraform/language/stacks",
+    link: "https://developer.hashicorp.com/terraform/language/block/stack/tfcomponent",
     placeholder: "Stack component configuration publish flow",
   },
 ];
