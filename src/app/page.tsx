@@ -207,7 +207,7 @@ function ProjectRow({ p, index }: { p: Project; index: number }) {
             className="font-mono"
             style={{ display: "inline-block", marginTop: 10, fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
           >
-            Live ↗
+            {p.linkLabel ?? "Live"} ↗
           </a>
         )}
       </div>

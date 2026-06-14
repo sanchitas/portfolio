@@ -40,6 +40,7 @@ export type Project = {
   description: string;
   tags: string[];
   link?: string;
+  linkLabel?: string;
   image?: string;
   video?: string;
   diagram?: string;
@@ -60,6 +61,7 @@ export const projects: Project[] = [
       "Shipped full HDS adoption and accessibility compliance for the registry serving 1M+ monthly visitors and 16B all-time downloads — in under two weeks with coding agents. Foundation for the post-unification Terraform community experience.",
     tags: ["Design Systems", "Developer Experience", "AI Tools"],
     link: "https://registry.terraform.io",
+    linkLabel: "Live",
     video: "public-registry.mp4",
     beforeImage: "public-registry-before.png",
     placeholder: "Public registry reskin walkthrough",
@@ -124,6 +126,7 @@ export const projects: Project[] = [
       "Adopted HDS across both private registries, resolved years of accumulated design debt, and split a mixed-persona UX into distinct consumer and publisher workflows. Grassroots foundation for the Terraform Developer Portal.",
     tags: ["Design Systems", "Platform", "0→1"],
     link: "https://developer.hashicorp.com/terraform/cloud-docs/registry/manage/tags",
+    linkLabel: "Docs",
     video: "module-ui.mp4",
     beforeImage: "module-ui-before.png",
     placeholder: "Private artifact redesign before/after",
@@ -146,6 +149,8 @@ export const projects: Project[] = [
     description:
       "Adopted accessible design system standards and rebuilt the browse-and-consume UX — environment tagging, version filtering, and streamlined module discovery for enterprise teams.",
     tags: ["Design Systems", "Enterprise", "Developer Experience"],
+    link: "https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/organizations/manage-reserved-tags",
+    linkLabel: "Docs",
     video: "environment-tagging.mp4",
     placeholder: "Private library browse and filter walkthrough",
   },
@@ -159,6 +164,7 @@ export const projects: Project[] = [
     tags: ["0→1", "Developer Experience"],
     video: "stack-publish.mp4",
     link: "https://developer.hashicorp.com/terraform/language/block/stack/tfcomponent",
+    linkLabel: "Docs",
     placeholder: "Stack component configuration publish flow",
   },
 ];
