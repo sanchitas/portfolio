@@ -123,6 +123,7 @@ export const projects: Project[] = [
     description:
       "Adopted HDS across both private registries, resolved years of accumulated design debt, and split a mixed-persona UX into distinct consumer and publisher workflows. Grassroots foundation for the Terraform Developer Portal.",
     tags: ["Design Systems", "Platform", "0→1"],
+    link: "https://developer.hashicorp.com/terraform/cloud-docs/registry/manage/tags",
     video: "module-ui.mp4",
     beforeImage: "module-ui-before.png",
     placeholder: "Private artifact redesign before/after",
