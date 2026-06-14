@@ -35,6 +35,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-gutter: stable both;
   background: var(--bg);
 }
 
@@ -62,15 +63,138 @@ body {
 }
 
 .animate-gutter {
+  position: relative;
   --gutter: 12px;
   animation: gutter-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
   margin: var(--g);
   border-radius: var(--g);
   min-height: calc(100vh - 2 * var(--g));
+  background: var(--bg);
+  overflow: visible;
+}
+
+.animate-gutter::before,
+.animate-gutter::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(var(--g) * 2);
+  background-image: url('/gutters-bg.png');
+  background-repeat: repeat-y;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.animate-gutter::before {
+  left: calc(-1 * var(--g));
+}
+
+.animate-gutter::after {
+  right: calc(-1 * var(--g));
 }
 
 @media (min-width: 48rem) {
   .animate-gutter {
     --gutter: 16px;
   }
+}
+
+.project-row {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.project-row__media {
+  flex: 0 0 56%;
+  min-width: 0;
+}
+
+.project-row__content {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .project-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .project-row__media,
+  .project-row__content {
+    flex: unset;
+    width: 100%;
+  }
+
+  .project-row__content {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .before-after-card {
+    display: block;
+  }
+}
+
+.before-after-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.before-after-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.before-after-layer--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.before-after-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.before-after-label {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.before-after-label--top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.before-after-label--bottom-center {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes visitor-blink {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.35); }
 }

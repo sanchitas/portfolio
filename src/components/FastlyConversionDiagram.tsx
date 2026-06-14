@@ -36,11 +36,8 @@ export default function FastlyConversionDiagram({
           alt="Old signup form"
           className="w-full h-full object-cover"
         />
-        <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-black/60 text-center">
-          <span
-            className="text-[14px] font-bold text-white tracking-widest uppercase"
-            style={{ fontFamily: "var(--font-bebas), sans-serif" }}
-          >
+        <div className="absolute inset-x-0 bottom-0 flex justify-center pb-3 pointer-events-none">
+          <span className="before-after-label before-after-label--bottom-center">
             Before
           </span>
         </div>
@@ -91,11 +88,8 @@ export default function FastlyConversionDiagram({
           alt="Redesigned signup form"
           className="w-full h-full object-cover"
         />
-        <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-black/60 text-center">
-          <span
-            className="text-[14px] font-bold text-white tracking-widest uppercase"
-            style={{ fontFamily: "var(--font-bebas), sans-serif" }}
-          >
+        <div className="absolute inset-x-0 bottom-0 flex justify-center pb-3 pointer-events-none">
+          <span className="before-after-label before-after-label--bottom-center">
             After
           </span>
         </div>

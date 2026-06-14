@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Resume — Sanchita Chamberlain",
   description:
-    "Lead Product Designer. Enterprise SaaS, developer tools, platform infrastructure.",
+    "Product Designer. Enterprise SaaS, developer tools, platform infrastructure.",
 };
 
 export default function ResumePage() {
@@ -12,11 +12,11 @@ export default function ResumePage() {
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
         <header style={{ marginBottom: 32 }}>
-          <h1 className="font-display" style={{ fontSize: "clamp(32px, 8vw, 48px)", letterSpacing: "-0.02em", color: "#000", textTransform: "uppercase", margin: 0 }}>
+          <h1 className="font-mono" style={{ fontSize: "clamp(32px, 8vw, 48px)", letterSpacing: "-0.02em", color: "#000", textTransform: "uppercase", margin: 0, fontWeight: 700 }}>
             Sanchita Chamberlain
           </h1>
           <p className="font-mono" style={{ marginTop: 10, fontSize: 13, color: "#666", letterSpacing: "0.02em" }}>
-            <span style={{ fontWeight: 600, color: "#000" }}>Lead Product Designer</span>
+            <span style={{ fontWeight: 600, color: "#000" }}>Product Designer</span>
             {" · "}
             <a
               href="mailto:sanchitachamberlain@gmail.com"
@@ -40,7 +40,7 @@ export default function ResumePage() {
 
         {/* Experience */}
         <section style={{ marginBottom: 48 }}>
-          <h2 className="font-display" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 32 }}>
+          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 32, fontWeight: 700 }}>
             Experience
           </h2>
 
@@ -139,7 +139,7 @@ export default function ResumePage() {
                 Analyzed customer integration patterns to surface{" "}
                 <Metric>30+ product issues</Metric>, reducing support cases{" "}
                 <Metric>50% YTD</Metric>; redesigned 2FA and SSO flows, increasing
-                secure feature enablement by <Metric>25%</Metric>
+                secure feature enablement by <Metric>23%</Metric>
               </Li>
             </ul>
           </div>
@@ -147,7 +147,7 @@ export default function ResumePage() {
 
         {/* Education */}
         <section>
-          <h2 className="font-display" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 16 }}>
+          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>
             Education
           </h2>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px" }}>
@@ -197,6 +197,6 @@ function Li({ children }: { children: React.ReactNode }) {
 
 function Metric({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-semibold text-black">{children}</span>
+    <span className="font-mono font-semibold text-black">{children}</span>
   );
 }

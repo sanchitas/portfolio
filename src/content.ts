@@ -22,10 +22,10 @@ export const links = {
 
 export const about = {
   statement:
-    "Sanchita Chamberlain is a Product Designer from the Bay Area who is currently working as a design lead at IBM (ex-HashiCorp). She has previously worked at Fastly, Zurich Insurance, TSYS, and Johnson & Johnson.",
+    "Product Designer from the Bay Area, currently at IBM (ex-HashiCorp). Previously worked at Fastly, Zurich Insurance, TSYS, and Johnson & Johnson.",
   details: {
     currently:
-      "Lead Product Designer, HashiCorp (IBM)\nTerraform Registry · Publisher Experience",
+      "Product Designer, HashiCorp (IBM)\nTerraform Registry · Publisher Experience",
     targeting:
       "Staff IC roles at the intersection of\nAI, developer tools & infrastructure",
     background:
@@ -59,6 +59,7 @@ export const projects: Project[] = [
     description:
       "Shipped full HDS adoption and accessibility compliance for the registry serving 1M+ monthly visitors and 16B all-time downloads — in under two weeks with coding agents. Foundation for the post-unification Terraform community experience.",
     tags: ["Design Systems", "Developer Experience", "AI Tools"],
+    link: "https://registry.terraform.io",
     video: "public-registry.mp4",
     beforeImage: "public-registry-before.png",
     placeholder: "Public registry reskin walkthrough",
@@ -86,10 +87,10 @@ export const projects: Project[] = [
   },
   {
     year: "2014–2025",
-    title: "BP Open — Award-Winning Disc Golf Branding",
+    title: "Award-Winning Merch Design",
     company: "Personal",
     description:
-      "Award-winning merch and event identity for the annual BP Open disc golf tournament at Harding Park, SF — poster, apparel, and on-course signage.",
+      "Do merch design on the side, including a first-place t-shirt design contest win last year.",
     tags: ["Brand", "Illustration"],
     image: "merch-harding.png",
     placeholder: "BP Open logo",
@@ -104,6 +105,16 @@ export const projects: Project[] = [
     tags: ["Enterprise", "0→1"],
     video: "fastly-rbac.mp4",
     placeholder: "RBAC role management walkthrough",
+  },
+  {
+    year: "2025",
+    title: "Design Your Life",
+    company: "HashiCorp / IBM",
+    description:
+      "A hands-on career-path workshop for summer interns. Rated 20/10. Helped software engineers, product managers, and product designers build confidence around career choices, growth plans, and long-term direction.",
+    tags: ["Mentorship", "Leadership"],
+    image: "interns-workshop.jpg",
+    placeholder: "Intern workshop photo",
   },
   {
     year: "2025",
@@ -148,15 +159,5 @@ export const projects: Project[] = [
     video: "stack-publish.mp4",
     link: "https://developer.hashicorp.com/terraform/language/stacks",
     placeholder: "Stack component configuration publish flow",
-  },
-  {
-    year: "2025",
-    title: "Design Your Life",
-    company: "HashiCorp / IBM",
-    description:
-      "A hands-on career-path workshop for summer interns. Rated 20/10. Built on the Stanford d.school framework — helping early-career designers shape a life they actually want, not just a job.",
-    tags: ["Mentorship", "Leadership"],
-    image: "interns-workshop.jpg",
-    placeholder: "Intern workshop photo",
   },
 ];
