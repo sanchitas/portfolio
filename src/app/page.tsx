@@ -37,60 +37,150 @@ function BeforeAfterCard({ video, beforeImage, afterImage }: { video?: string; b
 }
 
 // ── Media surface ──
-function ProjectMedia({ p }: { p: Project }) {
+function ProjectMedia({ p, index }: { p: Project; index: number }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dispRef = useRef<SVGFEDisplacementMapElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [inView, setInView] = useState(false);
   const isBrand = p.tags.includes("Brand");
+  const filterId = `water-${index}`;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.45 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
+    const dispEl = dispRef.current;
+    if (!dispEl) return;
+    const startScale = 32;
+    const duration = 1600;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      dispEl.setAttribute("scale", (startScale * (1 - eased)).toFixed(2));
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [inView]);
 
   return (
     <div
+      ref={containerRef}
       className="w-full rounded-md overflow-hidden"
       style={{
         aspectRatio: "16 / 9",
         backgroundColor: isBrand ? "var(--surface-brand)" : "var(--surface)",
         border: "1px solid var(--border)",
+        position: "relative",
       }}
     >
-      {p.diagram === "fastly-conversion" ? (
-        <FastlyConversionDiagram compact />
-      ) : p.beforeImage && (p.video || p.afterImage) ? (
-        <BeforeAfterCard video={p.video} beforeImage={p.beforeImage} afterImage={p.afterImage} />
-      ) : p.video ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src={`/${p.video}`} type="video/mp4" />
-        </video>
-      ) : p.image ? (
-        <img
-          src={`/${p.image}`}
-          alt={p.title}
-          className="w-full h-full"
-          style={{ objectFit: isBrand ? "contain" : "cover" }}
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="font-mono" style={{ fontSize: 9, color: "var(--fg-faint)", letterSpacing: "0.08em" }}>
-            {p.placeholder}
-          </span>
-        </div>
-      )}
+      <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }} aria-hidden="true">
+        <defs>
+          <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="turbulence" baseFrequency="0.018 0.012" numOctaves="3" seed={index + 3} result="noise" />
+            <feDisplacementMap ref={dispRef} in="SourceGraphic" in2="noise" scale="32" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          filter: `url(#${filterId})`,
+          willChange: "filter",
+        }}
+      >
+        {p.diagram === "fastly-conversion" ? (
+          <FastlyConversionDiagram compact />
+        ) : p.beforeImage && (p.video || p.afterImage) ? (
+          <BeforeAfterCard video={p.video} beforeImage={p.beforeImage} afterImage={p.afterImage} />
+        ) : p.video ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={`/${p.video}`} type="video/mp4" />
+          </video>
+        ) : p.image ? (
+          <img
+            src={`/${p.image}`}
+            alt={p.title}
+            className="w-full h-full"
+            style={{ objectFit: isBrand ? "contain" : "cover" }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="font-mono" style={{ fontSize: 9, color: "var(--fg-faint)", letterSpacing: "0.08em" }}>
+              {p.placeholder}
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 // ── Single project row ──
-function ProjectRow({ p }: { p: Project }) {
+function ProjectRow({ p, index }: { p: Project; index: number }) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -5% 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="project-row">
+    <div ref={rowRef} className="project-row">
       <div className="project-row__media">
-        <ProjectMedia p={p} />
+        <ProjectMedia p={p} index={index} />
       </div>
-      <div className="project-row__content">
+      <div
+        className="project-row__content"
+        style={{
+          transform: inView ? "translateY(0)" : "translateY(20px)",
+          opacity: inView ? 1 : 0,
+          transition: "transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, opacity 0.7s ease 0.1s",
+          willChange: "transform, opacity",
+        }}
+      >
         <span
           className="font-mono block"
           style={{ fontSize: 9, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--fg-faint)", marginBottom: 8, fontWeight: 700 }}
@@ -187,7 +277,7 @@ export default function Home() {
         return res.json();
       })
       .then((data) => {
-        const parts = [data.city, data.region, data.country_name].filter(Boolean);
+        const parts = [data.city, data.region_code, data.country_code].filter(Boolean);
         if (parts.length) {
           setVisitorLocation(parts.join(", "));
         }
@@ -233,65 +323,73 @@ export default function Home() {
           width: "100%",
           maxWidth: "min(900px, 100%)",
           display: "flex",
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "space-between",
-          gap: 12,
-          paddingBottom: 18,
-          borderBottom: "1px solid var(--border-mid)",
-          marginBottom: 24,
+          gap: 16,
+          marginBottom: "clamp(56px, 8vh, 96px)",
         }}
       >
-        <div style={{ flex: 1, textAlign: "left" }}>
+        <div>
           <p
             className="font-mono"
-            style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--fg)", margin: 0, fontWeight: 700 }}
+            style={{ fontSize: 22, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fg)", margin: 0, marginBottom: 10, fontWeight: 700 }}
           >
             Sanchita Chamberlain
           </p>
+          <div style={{ display: "flex", gap: 20 }}>
+            <a
+              href={`mailto:${links.email}`}
+              className="font-mono"
+              style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+            >
+              Email ↗
+            </a>
+            <a
+              href={links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono"
+              style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+            >
+              LinkedIn ↗
+            </a>
+            <a
+              href="/resume"
+              className="font-mono"
+              style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+            >
+              Resume →
+            </a>
+          </div>
         </div>
 
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            gap: 24,
-            flexWrap: "wrap",
-          }}
-        >
-          <a
-            href={`mailto:${links.email}`}
-            className="font-mono"
-            style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
-          >
-            Email ↗
-          </a>
-          <a
-            href={links.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono"
-            style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
-          >
-            LinkedIn ↗
-          </a>
-          <a
-            href="/resume"
-            className="font-mono"
-            style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
-          >
-            Resume →
-          </a>
-        </div>
-
-        <div style={{ flex: 1, textAlign: "right" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: 999,
+                backgroundColor: dark ? "#fff" : "#000",
+                display: "inline-block",
+                flexShrink: 0,
+                animation: "visitor-blink 1.2s infinite ease-in-out",
+              }}
+            />
+            <p
+              className="font-mono"
+              style={{ fontSize: 10, color: "var(--fg-muted)", margin: 0, lineHeight: 1.5, textAlign: "right" }}
+            >
+              {lastVisitor}
+              {visitorLocation ? ` · ${visitorLocation}` : ""}
+            </p>
+          </div>
           <button
             onClick={toggleTheme}
             className="font-mono"
             aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
             style={{
               fontSize: 18,
-              letterSpacing: "0.05em",
               color: "var(--fg-faint)",
               background: "none",
               border: "1px solid var(--border-mid)",
@@ -299,40 +397,12 @@ export default function Home() {
               padding: "8px 14px",
               cursor: "pointer",
               lineHeight: 1,
+              flexShrink: 0,
             }}
           >
             {dark ? "☀" : "☾"}
           </button>
         </div>
-      </div>
-
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "min(900px, 100%)",
-          marginBottom: 24,
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-        }}
-      >
-        <span
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: 999,
-            backgroundColor: dark ? "#fff" : "#000",
-            display: "inline-block",
-            animation: "visitor-blink 1.2s infinite ease-in-out",
-          }}
-        />
-        <p
-          className="font-mono"
-          style={{ fontSize: 11, color: "var(--fg-muted)", margin: 0, lineHeight: 1.5 }}
-        >
-          Last visitor: {lastVisitor}
-          {visitorLocation ? ` · ${visitorLocation}` : ""}
-        </p>
       </div>
 
       <div style={{ width: "100%", maxWidth: "min(900px, 100%)" }}>
@@ -351,7 +421,7 @@ export default function Home() {
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
           {projects.map((p, i) => (
-            <ProjectRow key={i} p={p} />
+            <ProjectRow key={i} p={p} index={i} />
           ))}
         </div>
       </section>
