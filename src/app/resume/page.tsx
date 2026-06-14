@@ -33,6 +33,15 @@ export default function ResumePage() {
             >
               LinkedIn
             </a>
+            {" · "}
+            <a
+              href="https://sanchitachamberlain.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-black transition-colors"
+            >
+              sanchitachamberlain.com
+            </a>
           </p>
         </header>
 
