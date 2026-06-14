@@ -51,6 +51,12 @@ export default function RootLayout({
       lang="en"
       className={`${dmMono.variable} ${dmSerif.variable} ${bebas.variable} h-full`}
     >
+      {/* Prevent dark-mode flash — reads localStorage before first paint */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();`,
+        }}
+      />
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

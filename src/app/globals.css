@@ -6,51 +6,71 @@
   --font-display: var(--font-bebas);
 }
 
+/* ── Color tokens ── */
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --fg-muted: rgba(0, 0, 0, 0.55);
+  --fg-faint: rgba(0, 0, 0, 0.32);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-mid: rgba(0, 0, 0, 0.1);
+  --surface: #f0ede8;
+  --surface-brand: #fff;
+}
+
+[data-theme="dark"] {
+  --bg: #111;
+  --fg: #ededed;
+  --fg-muted: rgba(255, 255, 255, 0.5);
+  --fg-faint: rgba(255, 255, 255, 0.3);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-mid: rgba(255, 255, 255, 0.1);
+  --surface: #1c1c1c;
+  --surface-brand: #1c1c1c;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-::selection { background: rgba(0,0,0,0.12); color: black; text-shadow: none; }
+::selection { background: rgba(128,128,128,0.2); text-shadow: none; }
 
 html {
   scroll-behavior: smooth;
-  background: #1e3a14; /* grass green — visible on overscroll */
+  background: var(--bg);
 }
 
 body {
-  background-color: transparent;
-  color: #111;
+  background-color: var(--bg);
+  color: var(--fg);
   font-family: var(--font-dm-mono), monospace;
   font-weight: 300;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Pool block positioning — responsive */
-.pool-block-section {
-  padding-left: calc(var(--block-offset, 10vw) * 0.3 + 5vw);
+/* Animated gutter — content insets from viewport edge on load */
+@property --g {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
 }
-@media (min-width: 768px) {
-  .pool-block-section {
-    padding-left: var(--block-offset, 10vw);
+
+@keyframes gutter-in {
+  0%   { --g: 0px; }
+  100% { --g: var(--gutter); }
+}
+
+.animate-gutter {
+  --gutter: 12px;
+  animation: gutter-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  margin: var(--g);
+  border-radius: var(--g);
+  min-height: calc(100vh - 2 * var(--g));
+}
+
+@media (min-width: 48rem) {
+  .animate-gutter {
+    --gutter: 16px;
   }
-}
-
-/* Caustic shimmer on submerged blocks */
-.caustic-shimmer {
-  background: linear-gradient(
-    135deg,
-    transparent 20%,
-    rgba(0, 200, 130, 0.12) 35%,
-    transparent 50%,
-    rgba(0, 200, 130, 0.08) 65%,
-    transparent 80%
-  );
-  background-size: 400% 400%;
-  animation: shimmer-move 5s ease-in-out infinite;
-  mix-blend-mode: overlay;
-}
-
-@keyframes shimmer-move {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }

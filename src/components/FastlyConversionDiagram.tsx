@@ -38,13 +38,10 @@ export default function FastlyConversionDiagram({
         />
         <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-black/60 text-center">
           <span
-            className="text-[22px] font-bold text-white"
+            className="text-[14px] font-bold text-white tracking-widest uppercase"
             style={{ fontFamily: "var(--font-bebas), sans-serif" }}
           >
-            13.6%
-          </span>
-          <span className="text-[8px] text-white/60 block -mt-0.5">
-            sign-up conversion
+            Before
           </span>
         </div>
       </div>
@@ -96,13 +93,10 @@ export default function FastlyConversionDiagram({
         />
         <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-black/60 text-center">
           <span
-            className="text-[22px] font-bold text-white"
+            className="text-[14px] font-bold text-white tracking-widest uppercase"
             style={{ fontFamily: "var(--font-bebas), sans-serif" }}
           >
-            26.5%
-          </span>
-          <span className="text-[8px] text-white/60 block -mt-0.5">
-            sign-up conversion
+            After
           </span>
         </div>
       </div>

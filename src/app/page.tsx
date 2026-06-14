@@ -1,284 +1,231 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import dynamic from "next/dynamic";
-import { projects, siteConfig, hero, links } from "@/content";
+import { useRef, useEffect, useState } from "react";
+import { links, projects, about, type Project } from "@/content";
+import FastlyConversionDiagram from "@/components/FastlyConversionDiagram";
 
-const CausticCanvas = dynamic(
-  () => import("@/components/CausticCanvas"),
-  { ssr: false }
-);
+// ── Before/After card ──
+function BeforeAfterCard({ video, beforeImage, afterImage }: { video?: string; beforeImage: string; afterImage?: string }) {
+  return (
+    <div className="relative w-full h-full">
+      <div
+        className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded font-mono font-bold tracking-wider uppercase"
+        style={{ fontSize: 9, backgroundColor: "rgba(0,0,0,0.55)", color: "white" }}
+      >
+        Before
+      </div>
+      <img
+        src={`/${beforeImage}`}
+        alt="Before"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {afterImage ? (
+        <img src={`/${afterImage}`} alt="After" className="hidden" />
+      ) : video ? (
+        <video autoPlay muted loop playsInline className="hidden">
+          <source src={`/${video}`} type="video/mp4" />
+        </video>
+      ) : null}
+    </div>
+  );
+}
 
-// Horizontal offsets (vw) — meandering path down the pool
-const OFFSETS = [10, 48, 20, 56, 6, 42, 16, 52, 30, 38];
-
-export default function Home() {
-  const blocksRef = useRef<(HTMLDivElement | null)[]>([]);
-  const videosRef = useRef<(HTMLVideoElement | null)[]>([]);
-  const videoWrapsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const shimmersRef = useRef<(HTMLDivElement | null)[]>([]);
-  const activeRef = useRef(-1);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
-
-  /* grass-green overscroll — only on this page */
-  useEffect(() => {
-    const prev = document.documentElement.style.background;
-    document.documentElement.style.background = "#1e3a14";
-    return () => { document.documentElement.style.background = prev; };
-  }, []);
-
-  /* scroll-driven depth animation + video management */
-  useEffect(() => {
-    let ticking = false;
-
-    const update = () => {
-      const vh = window.innerHeight;
-      const center = vh * 0.45;
-      let newActive = -1;
-      let minDist = Infinity;
-
-      blocksRef.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const mid = rect.top + rect.height / 2;
-        const rawDepth = (mid - center) / (vh * 0.6);
-        const depth = Math.max(0, Math.min(1, rawDepth));
-
-        // visual transforms
-        const scale = 0.45 + 0.55 * (1 - depth);
-        const blur = depth * 4;
-        el.style.transform = `scale(${scale})`;
-        el.style.filter = `blur(${blur}px)`;
-        el.style.opacity = String(0.3 + 0.7 * (1 - depth));
-
-        // caustic shimmer fades as block surfaces
-        const shimmer = shimmersRef.current[i];
-        if (shimmer) shimmer.style.opacity = String(depth * 0.5);
-
-        // closest surfaced block with video
-        const dist = Math.abs(mid - center);
-        if (depth < 0.2 && dist < minDist && projects[i].video) {
-          newActive = i;
-          minDist = dist;
-        }
-      });
-
-      // video management — one at a time
-      if (newActive !== activeRef.current) {
-        const old = activeRef.current;
-        if (old >= 0) {
-          const ow = videoWrapsRef.current[old];
-          if (ow) ow.style.opacity = "0";
-          videosRef.current[old]?.pause();
-        }
-        if (timerRef.current) clearTimeout(timerRef.current);
-
-        activeRef.current = newActive;
-
-        if (newActive >= 0) {
-          timerRef.current = setTimeout(() => {
-            const v = videosRef.current[newActive];
-            const w = videoWrapsRef.current[newActive];
-            if (v) { v.currentTime = 0; v.play().catch(() => {}); }
-            if (w) w.style.opacity = "1";
-          }, 2000);
-        }
-      }
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    requestAnimationFrame(update);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
+// ── Media surface ──
+function ProjectMedia({ p }: { p: Project }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isBrand = p.tags.includes("Brand");
 
   return (
-    <>
-      <CausticCanvas />
+    <div
+      className="w-full rounded-md overflow-hidden"
+      style={{
+        aspectRatio: "16 / 9",
+        backgroundColor: isBrand ? "var(--surface-brand)" : "var(--surface)",
+        border: "1px solid var(--border)",
+      }}
+    >
+      {p.diagram === "fastly-conversion" ? (
+        <FastlyConversionDiagram compact />
+      ) : p.beforeImage && (p.video || p.afterImage) ? (
+        <BeforeAfterCard video={p.video} beforeImage={p.beforeImage} afterImage={p.afterImage} />
+      ) : p.video ? (
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src={`/${p.video}`} type="video/mp4" />
+        </video>
+      ) : p.image ? (
+        <img
+          src={`/${p.image}`}
+          alt={p.title}
+          className="w-full h-full"
+          style={{ objectFit: isBrand ? "contain" : "cover" }}
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center">
+          <span className="font-mono" style={{ fontSize: 9, color: "var(--fg-faint)", letterSpacing: "0.08em" }}>
+            {p.placeholder}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
 
-      <div style={{ position: "relative", zIndex: 1 }}>
-        {/* ─── HEADER ─── */}
-        <header style={{
-          textAlign: "center",
-          paddingTop: "clamp(64px, 14vh, 160px)",
-          paddingBottom: "clamp(32px, 6vh, 80px)",
-          color: "#fff",
-        }}>
-          <h1 className="font-display" style={{
-            fontSize: "clamp(36px, 7vw, 80px)",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            lineHeight: 1,
-            fontWeight: 400,
-          }}>
-            {siteConfig.name}
-          </h1>
-          <p className="font-mono" style={{
-            marginTop: 20,
-            fontSize: "clamp(12px, 1.4vw, 16px)",
-            opacity: 0.6,
-            lineHeight: 1.7,
-            whiteSpace: "pre-line",
-          }}>
-            {hero.tagline}
-          </p>
-        </header>
-
-        {/* clear water before first block */}
-        <div style={{ height: "15vh" }} />
-
-        {/* ─── POOL BLOCKS ─── */}
-        {projects.map((p, i) => (
-          <section
-            key={i}
-            className="pool-block-section"
-            style={{
-              "--block-offset": `${OFFSETS[i % OFFSETS.length]}vw`,
-              minHeight: "60vh",
-              display: "flex",
-              alignItems: "center",
-            } as React.CSSProperties}
-          >
-            <div
-              ref={(el) => { blocksRef.current[i] = el; }}
-              style={{
-                width: "clamp(280px, 50vw, 420px)",
-                aspectRatio: "3 / 2",
-                backgroundColor: "#c8c0b4",
-                borderRadius: 3,
-                boxShadow: "0 8px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)",
-                position: "relative",
-                overflow: "hidden",
-                transformOrigin: "center center",
-                willChange: "transform, filter, opacity",
-              }}
-            >
-              {/* title face */}
-              <div style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 24,
-                zIndex: 2,
-              }}>
-                <span className="font-mono" style={{
-                  fontSize: 10,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.12em",
-                  color: "rgba(0,0,0,0.35)",
-                  marginBottom: 8,
-                }}>
-                  {p.company} &middot; {p.year}
-                </span>
-                <span className="font-display" style={{
-                  fontSize: "clamp(16px, 2.2vw, 26px)",
-                  color: "rgba(0,0,0,0.7)",
-                  textAlign: "center",
-                  letterSpacing: "0.05em",
-                  textTransform: "uppercase",
-                  lineHeight: 1.2,
-                }}>
-                  {p.title}
-                </span>
-              </div>
-
-              {/* video layer — fades in when block surfaces */}
-              {p.video && (
-                <div
-                  ref={(el) => { videoWrapsRef.current[i] = el; }}
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 3,
-                    opacity: 0,
-                    transition: "opacity 1.5s ease",
-                  }}
-                >
-                  <video
-                    ref={(el) => { videosRef.current[i] = el; }}
-                    muted
-                    loop
-                    playsInline
-                    preload="none"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                  >
-                    <source src={`/${p.video}`} type="video/mp4" />
-                  </video>
-                </div>
-              )}
-
-              {/* caustic shimmer overlay */}
-              <div
-                ref={(el) => { shimmersRef.current[i] = el; }}
-                className="caustic-shimmer"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  zIndex: 4,
-                  pointerEvents: "none",
-                  opacity: 0.4,
-                }}
-              />
-            </div>
-          </section>
-        ))}
-
-        {/* ─── FOOTER ─── */}
-        <footer style={{
-          textAlign: "center",
-          padding: "64px 24px 80px",
-          color: "rgba(255,255,255,0.35)",
-        }}>
-          <div style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 32,
-            marginBottom: 24,
-          }}>
-            <a
-              href={`mailto:${links.email}`}
-              className="font-mono hover:opacity-80 transition-opacity"
-              style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}
-            >
-              Email
-            </a>
-            <a
-              href={links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono hover:opacity-80 transition-opacity"
-              style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}
-            >
-              LinkedIn
-            </a>
-            <a
-              href="/resume"
-              className="font-mono hover:opacity-80 transition-opacity"
-              style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}
-            >
-              Resume
-            </a>
-          </div>
-          <p className="font-mono" style={{ fontSize: 11 }}>
-            Sanchita Chamberlain &middot; {new Date().getFullYear()}
-          </p>
-        </footer>
+// ── Single project row ──
+function ProjectRow({ p }: { p: Project }) {
+  return (
+    <div style={{ display: "flex", gap: 40, alignItems: "flex-start" }}>
+      <div style={{ flex: "0 0 56%", minWidth: 0 }}>
+        <ProjectMedia p={p} />
       </div>
-    </>
+      <div style={{ flex: 1, minWidth: 0, paddingTop: 4 }}>
+        <span
+          className="font-mono block"
+          style={{ fontSize: 9, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--fg-faint)", marginBottom: 8 }}
+        >
+          {p.company}
+        </span>
+        <h3
+          className="font-display"
+          style={{ fontSize: "clamp(18px, 2vw, 24px)", letterSpacing: "0.03em", lineHeight: 1.05, textTransform: "uppercase", color: "var(--fg)", marginBottom: 12 }}
+        >
+          {p.title}
+        </h3>
+        <p
+          className="font-mono"
+          style={{ fontSize: 12, lineHeight: 1.75, color: "var(--fg-muted)" }}
+        >
+          {p.description}
+        </p>
+        {p.link && (
+          <a
+            href={p.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono"
+            style={{ display: "inline-block", marginTop: 10, fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+          >
+            Docs ↗
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    const isDark = stored === "dark";
+    setDark(isDark);
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+  }, []);
+
+  function toggleTheme() {
+    const next = !dark;
+    setDark(next);
+    const t = next ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", t);
+    localStorage.setItem("theme", t);
+  }
+
+  return (
+    <main
+      className="animate-gutter flex flex-col items-center pb-16 px-8 md:px-24 lg:px-40"
+      style={{ paddingTop: "clamp(64px, 10vh, 112px)" }}
+    >
+      {/* ─── BIO + LINKS ─── */}
+      <div style={{ width: "100%", maxWidth: 860 }}>
+        {/* Theme toggle */}
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 24 }}>
+          <button
+            onClick={toggleTheme}
+            className="font-mono"
+            style={{
+              fontSize: 10,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "var(--fg-faint)",
+              background: "none",
+              border: "1px solid var(--border-mid)",
+              borderRadius: 2,
+              padding: "4px 12px",
+              cursor: "pointer",
+            }}
+          >
+            {dark ? "Light" : "Dark"}
+          </button>
+        </div>
+
+        <p
+          className="font-serif"
+          style={{ fontSize: "clamp(14px, 1.6vw, 17px)", lineHeight: 1.75, color: "var(--fg-muted)" }}
+        >
+          {about.statement}
+        </p>
+
+        <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: "6px 36px" }}>
+          <a
+            href={`mailto:${links.email}`}
+            className="font-mono"
+            style={{ fontSize: 12, color: "var(--fg-faint)", textDecoration: "underline" }}
+          >
+            Email ↗
+          </a>
+          <a
+            href={links.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono"
+            style={{ fontSize: 12, color: "var(--fg-faint)", textDecoration: "underline" }}
+          >
+            LinkedIn ↗
+          </a>
+          <a
+            href="/resume"
+            className="font-mono"
+            style={{ fontSize: 12, color: "var(--fg-faint)", textDecoration: "underline" }}
+          >
+            Resume →
+          </a>
+        </div>
+      </div>
+
+      {/* ─── WORK ─── */}
+      <section
+        className="w-full"
+        style={{ marginTop: "clamp(56px, 8vh, 96px)", maxWidth: 860 }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
+          {projects.map((p, i) => (
+            <ProjectRow key={i} p={p} />
+          ))}
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer
+        className="w-full"
+        style={{
+          marginTop: 64,
+          paddingTop: 28,
+          paddingBottom: 48,
+          borderTop: "1px solid var(--border-mid)",
+          maxWidth: 860,
+        }}
+      >
+        <p className="font-mono" style={{ fontSize: 11, color: "var(--fg-faint)" }}>
+          Sanchita Chamberlain · {new Date().getFullYear()}
+        </p>
+      </footer>
+    </main>
   );
 }
