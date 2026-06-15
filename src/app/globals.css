@@ -44,8 +44,12 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-gutter: stable both;
-  background: var(--bg);
+  scrollbar-gutter: stable both;
+  background-color: var(--bg);
+  background-image: url('/magnific_rlhoJlkxtc.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 body {
@@ -59,56 +63,6 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Animated gutter — content insets from viewport edge on load */
-@property --g {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@keyframes gutter-in {
-  0%   { --g: 0px; }
-  100% { --g: var(--gutter); }
-}
-
-.animate-gutter {
-  position: relative;
-  --gutter: 12px;
-  animation: gutter-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
-  margin: var(--g);
-  border-radius: var(--g);
-  min-height: calc(100vh - 2 * var(--g));
-  background: var(--bg);
-  overflow: visible;
-}
-
-.animate-gutter::before,
-.animate-gutter::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: calc(var(--g) * 2);
-  background-image: url('/gutters-bg.png');
-  background-repeat: repeat-y;
-  background-position: center;
-  background-size: contain;
-  pointer-events: none;
-}
-
-.animate-gutter::before {
-  left: calc(-1 * var(--g));
-}
-
-.animate-gutter::after {
-  right: calc(-1 * var(--g));
-}
-
-@media (min-width: 48rem) {
-  .animate-gutter {
-    --gutter: 16px;
-  }
-}
 
 .project-row {
   display: flex;

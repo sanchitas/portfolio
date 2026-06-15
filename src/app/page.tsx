@@ -374,7 +374,7 @@ export default function Home() {
 
   return (
     <main
-      className="animate-gutter flex flex-col items-center pb-16 px-8 md:px-24 lg:px-40 font-mono"
+      className="flex flex-col items-center pb-16 px-8 md:px-24 lg:px-40 font-mono"
       style={{ paddingTop: "clamp(32px, 5vh, 56px)" }}
     >
       {/* ── Utility bar ── */}
