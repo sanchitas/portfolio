@@ -128,9 +128,10 @@ export default function ResumePage() {
             <ul style={{ listStyleType: "disc", paddingLeft: 24, margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
               <Li>
                 Doubled sign-up conversion from <Metric>13.6% to 26.5%</Metric> YoY
-                by separating conflicting sales lead-gen and self-serve flows; informed
-                pricing and packaging changes that took SMB from{" "}
-                <Metric>0% to 300%</Metric> of quota
+                by separating conflicting sales lead-gen and self-serve acquisition
+                funnels — untangling a structural conflict between lead qualification
+                and product-led growth; reduced friction for developers while improving
+                lead quality for sales
               </Li>
               <Li>
                 Redesigned RBAC from 4 fixed roles to a flexible system with custom
@@ -139,16 +140,15 @@ export default function ResumePage() {
                 CTO and CEO
               </Li>
               <Li>
-                Led <Metric>7 teams</Metric> without a PM to resolve a structural
-                conflict between lead qualification and product-led growth; trained
-                brand designers to run qualitative research, making the conversion work
-                self-sustaining after handoff
-              </Li>
-              <Li>
                 Analyzed customer integration patterns to surface{" "}
                 <Metric>30+ product issues</Metric>, reducing support cases{" "}
                 <Metric>50% YTD</Metric>; redesigned 2FA and SSO flows, increasing
                 secure feature enablement by <Metric>23%</Metric>
+              </Li>
+              <Li>
+                Spent the first year at Fastly in customer support engineering,
+                troubleshooting production traffic and edge behavior for enterprise
+                customers, before moving into product design.
               </Li>
             </ul>
           </div>
