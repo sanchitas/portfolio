@@ -290,6 +290,7 @@ function HeroName() {
       ref={wrapRef}
       style={{
         width: "100%",
+        maxWidth: "min(900px, 100%)",
         marginBottom: "clamp(16px, 2.5vh, 28px)",
         overflow: "hidden",
       }}
