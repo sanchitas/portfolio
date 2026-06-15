@@ -257,6 +257,64 @@ function renderIntro(text: string) {
   );
 }
 
+function HeroName() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const h1Ref = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const fit = () => {
+      const wrap = wrapRef.current;
+      const h1 = h1Ref.current;
+      if (!wrap || !h1) return;
+      const available = wrap.getBoundingClientRect().width;
+      // "CHAMBERLAIN" is the longer line — binary-search font size to fill container
+      let lo = 10, hi = 600;
+      h1.style.fontSize = `${hi}px`;
+      while (hi - lo > 0.5) {
+        const mid = (lo + hi) / 2;
+        h1.style.fontSize = `${mid}px`;
+        const w = h1.scrollWidth;
+        if (w > available) hi = mid; else lo = mid;
+      }
+      h1.style.fontSize = `${lo}px`;
+    };
+
+    // Wait for font to load before measuring
+    document.fonts.ready.then(fit);
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
+  return (
+    <div
+      ref={wrapRef}
+      style={{
+        width: "100%",
+        marginBottom: "clamp(16px, 2.5vh, 28px)",
+        overflow: "hidden",
+      }}
+    >
+      <h1
+        ref={h1Ref}
+        style={{
+          fontFamily: "'Enquix', var(--font-bebas), sans-serif",
+          fontSize: "10px",
+          letterSpacing: "-0.01em",
+          lineHeight: 0.88,
+          color: "var(--fg)",
+          margin: 0,
+          textTransform: "uppercase",
+          whiteSpace: "nowrap",
+        }}
+      >
+        Sanchita
+        <br />
+        Chamberlain
+      </h1>
+    </div>
+  );
+}
+
 export default function Home() {
   const [dark, setDark] = useState(false);
   const [lastVisitor, setLastVisitor] = useState("No previous visitor data");
@@ -316,93 +374,96 @@ export default function Home() {
   return (
     <main
       className="animate-gutter flex flex-col items-center pb-16 px-8 md:px-24 lg:px-40 font-mono"
-      style={{ paddingTop: "clamp(64px, 10vh, 112px)" }}
+      style={{ paddingTop: "clamp(32px, 5vh, 56px)" }}
     >
+      {/* ── Utility bar ── */}
       <div
         style={{
           width: "100%",
           maxWidth: "min(900px, 100%)",
           display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: "clamp(56px, 8vh, 96px)",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          gap: 14,
+          marginBottom: "clamp(40px, 7vh, 72px)",
         }}
       >
-        <div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: 999,
+              backgroundColor: dark ? "#fff" : "#000",
+              display: "inline-block",
+              flexShrink: 0,
+              animation: "visitor-blink 1.2s infinite ease-in-out",
+            }}
+          />
           <p
             className="font-mono"
-            style={{ fontSize: 22, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fg)", margin: 0, marginBottom: 10, fontWeight: 700 }}
+            style={{ fontSize: 10, color: "var(--fg-muted)", margin: 0, lineHeight: 1.5 }}
           >
-            Sanchita Chamberlain
+            {lastVisitor}
+            {visitorLocation ? ` · ${visitorLocation}` : ""}
           </p>
-          <div style={{ display: "flex", gap: 20 }}>
-            <a
-              href={`mailto:${links.email}`}
-              className="font-mono"
-              style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
-            >
-              Email ↗
-            </a>
-            <a
-              href={links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono"
-              style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
-            >
-              LinkedIn ↗
-            </a>
-            <a
-              href="/resume"
-              className="font-mono"
-              style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
-            >
-              Resume →
-            </a>
-          </div>
         </div>
+        <button
+          onClick={toggleTheme}
+          className="font-mono"
+          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+          style={{
+            fontSize: 18,
+            color: "var(--fg-faint)",
+            background: "none",
+            border: "1px solid var(--border-mid)",
+            borderRadius: 4,
+            padding: "8px 14px",
+            cursor: "pointer",
+            lineHeight: 1,
+            flexShrink: 0,
+          }}
+        >
+          {dark ? "☀" : "☾"}
+        </button>
+      </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: 999,
-                backgroundColor: dark ? "#fff" : "#000",
-                display: "inline-block",
-                flexShrink: 0,
-                animation: "visitor-blink 1.2s infinite ease-in-out",
-              }}
-            />
-            <p
-              className="font-mono"
-              style={{ fontSize: 10, color: "var(--fg-muted)", margin: 0, lineHeight: 1.5, textAlign: "right" }}
-            >
-              {lastVisitor}
-              {visitorLocation ? ` · ${visitorLocation}` : ""}
-            </p>
-          </div>
-          <button
-            onClick={toggleTheme}
-            className="font-mono"
-            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-            style={{
-              fontSize: 18,
-              color: "var(--fg-faint)",
-              background: "none",
-              border: "1px solid var(--border-mid)",
-              borderRadius: 4,
-              padding: "8px 14px",
-              cursor: "pointer",
-              lineHeight: 1,
-              flexShrink: 0,
-            }}
-          >
-            {dark ? "☀" : "☾"}
-          </button>
-        </div>
+      {/* ── Hero name ── */}
+      <HeroName />
+
+      {/* ── Links ── */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "min(900px, 100%)",
+          display: "flex",
+          gap: 20,
+          marginBottom: "clamp(48px, 8vh, 88px)",
+        }}
+      >
+        <a
+          href={`mailto:${links.email}`}
+          className="font-mono"
+          style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+        >
+          Email ↗
+        </a>
+        <a
+          href={links.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono"
+          style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+        >
+          LinkedIn ↗
+        </a>
+        <a
+          href="/resume"
+          className="font-mono"
+          style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+        >
+          Resume →
+        </a>
       </div>
 
       <div style={{ width: "100%", maxWidth: "min(900px, 100%)" }}>

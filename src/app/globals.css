@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Enquix';
+  src: url('/font/Enquix-Regular.ttf') format('truetype'),
+       url('/font/Enquix-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --font-serif: var(--font-dm-serif);
   --font-mono: var(--font-dm-mono);
