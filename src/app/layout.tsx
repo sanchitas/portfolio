@@ -25,11 +25,6 @@ export const metadata: Metadata = {
   title: "Sanchita Chamberlain",
   description:
     "Staff Product Designer. I design the system around the product — the phasing, the architecture, the cross-functional alignment that makes it shippable.",
-  icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
-  },
   openGraph: {
     title: "Sanchita Chamberlain",
     description:
@@ -57,7 +52,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmMono.variable} ${dmSerif.variable} ${bebas.variable} h-full`}
+      className={`${dmMono.variable} ${dmSerif.variable} ${bebas.variable}`}
     >
       <head>
         {/* Prevent dark-mode flash — reads localStorage before first paint */}
@@ -66,15 +61,11 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();`,
           }}
         />
-        {/* Preload wave image so it's ready before rubber-band overscroll occurs */}
-        <link rel="preload" href="/magnific_rlhoJlkxtc.png" as="image" />
+        {/* Preload overscroll background so it's ready before rubber-band */}
+        <link rel="preload" href="/magnific__digital-illustration-a-seamless-pattern-of-wavy-li__37748.jpeg" as="image" />
       </head>
-      <body className="min-h-full flex flex-col">
-        {/* Wave background — position:fixed keeps it stationary during rubber-band overscroll.
-            page-wrapper's solid bg covers this during normal scroll; when page content
-            translates during overscroll the wave becomes visible. */}
-        <div aria-hidden="true" className="wave-bg" />
-        <div className="page-wrapper">{children}</div>
+      <body className="min-h-screen flex flex-col">
+        {children}
       </body>
     </html>
   );

@@ -84,6 +84,8 @@ export const projects: Project[] = [
     description:
       "First bulk action shipped in all of Terraform. Extended tagging to usage control — binding modules and providers to projects at scale. Two adjacent teams now building on the pattern.",
     tags: ["Enterprise", "0→1", "Systems Thinking"],
+    link: "https://developer.hashicorp.com/terraform/cloud-docs/registry/manage/tags",
+    linkLabel: "Docs",
     video: "bulk-tagging.mp4",
     placeholder: "Projects → Registry bulk tag assignment flow",
   },
@@ -94,6 +96,8 @@ export const projects: Project[] = [
     description:
       "Do merch design on the side, including a first-place t-shirt design contest win last year.",
     tags: ["Brand", "Illustration"],
+    link: "https://www.instagram.com/p/DQSaZ0gksMN/?img_index=18",
+    linkLabel: "Link",
     image: "merch-harding.png",
     placeholder: "BP Open logo",
   },

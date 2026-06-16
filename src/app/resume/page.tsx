@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ResumePage() {
   return (
-    <main className="min-h-screen bg-white px-5 py-12 sm:px-10 sm:py-16 print:!p-0" style={{ backgroundImage: "none" }}>
+    <main className="min-h-screen bg-white px-5 py-12 sm:px-10 sm:py-16 print:!p-0">
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
         <header style={{ marginBottom: 20 }}>
@@ -173,7 +173,7 @@ export default function ResumePage() {
         </section>
 
         {/* Print / download footer */}
-        <div style={{ marginTop: 80, paddingTop: 32, borderTop: "1px solid #f0f0f0", display: "flex", alignItems: "center", justifyContent: "space-between" }} className="print:!hidden">
+        <div style={{ marginTop: 80, paddingTop: 32, paddingBottom: 48, borderTop: "1px solid #f0f0f0", display: "flex", alignItems: "center", justifyContent: "space-between" }} className="print:!hidden">
           <a
             href="/"
             className="font-mono"
