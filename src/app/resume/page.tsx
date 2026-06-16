@@ -11,7 +11,7 @@ export default function ResumePage() {
     <main className="min-h-screen bg-white px-5 py-12 sm:px-10 sm:py-16 print:!p-0" style={{ backgroundImage: "none" }}>
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
-        <header style={{ marginBottom: 32 }}>
+        <header style={{ marginBottom: 20 }}>
           <h1 style={{ fontFamily: "'Enquix', var(--font-bebas), sans-serif", fontSize: "clamp(18px, 3.2vw, 30px)", letterSpacing: "-0.01em", lineHeight: 1, color: "#000", textTransform: "uppercase", margin: 0, fontWeight: 400, whiteSpace: "nowrap" }}>
             Sanchita Chamberlain
           </h1>
@@ -45,11 +45,11 @@ export default function ResumePage() {
           </p>
         </header>
 
-        <hr style={{ border: "none", borderTop: "1px solid #e5e5e5", marginBottom: 40 }} />
+        <hr style={{ border: "none", borderTop: "1px solid #e5e5e5", marginBottom: 20 }} />
 
         {/* Experience */}
         <section style={{ marginBottom: 48 }}>
-          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 32, fontWeight: 700 }}>
+          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 20, fontWeight: 700 }}>
             Experience
           </h2>
 
@@ -173,7 +173,7 @@ export default function ResumePage() {
         </section>
 
         {/* Print / download footer */}
-        <div style={{ marginTop: 48, paddingTop: 24, borderTop: "1px solid #f0f0f0", display: "flex", alignItems: "center", justifyContent: "space-between" }} className="print:!hidden">
+        <div style={{ marginTop: 80, paddingTop: 32, borderTop: "1px solid #f0f0f0", display: "flex", alignItems: "center", justifyContent: "space-between" }} className="print:!hidden">
           <a
             href="/"
             className="font-mono"

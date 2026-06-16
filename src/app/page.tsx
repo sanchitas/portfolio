@@ -296,7 +296,7 @@ function HeroRippleCanvas({
     cvs.style.width = rect.width + "px";
     cvs.style.height = rect.height + "px";
 
-    // Render name text into offscreen buffer matching h1's computed font
+    // Offscreen canvas — render text with precise metrics to match h1 CSS
     const off = document.createElement("canvas");
     off.width = W;
     off.height = H;
@@ -305,21 +305,35 @@ function HeroRippleCanvas({
 
     const computed = window.getComputedStyle(h1el);
     const fs = parseFloat(computed.fontSize) * S;
+
+    // Match h1 styles exactly
+    offCtx.textBaseline = "alphabetic";
+    (offCtx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = `${-0.01 * fs}px`;
     offCtx.font = `400 ${fs}px ${computed.fontFamily}`;
     offCtx.fillStyle = computed.color;
-    offCtx.textBaseline = "top";
-    offCtx.fillText("SANCHITA", 0, 0);
-    offCtx.fillText("CHAMBERLAIN", 0, fs * 0.88);
+
+    // Compute baseline Y to match h1's CSS line-height rendering.
+    // h1 has lineHeight:0.88 (tight). The baseline within each line box =
+    // -halfLeading where halfLeading = (lineBox - fontHeight) / 2.
+    // For tight line-height this is positive, pushing baseline down from line box top.
+    const m = offCtx.measureText("SANCHITA");
+    const fontH = (m.fontBoundingBoxAscent ?? m.actualBoundingBoxAscent) +
+                  (m.fontBoundingBoxDescent ?? m.actualBoundingBoxDescent);
+    const halfLeading = (fs * 0.88 - fontH) / 2;
+    const baseline0 = -halfLeading; // baseline Y of first line in canvas px
+
+    offCtx.fillText("SANCHITA", 0, baseline0);
+    offCtx.fillText("CHAMBERLAIN", 0, baseline0 + fs * 0.88);
     const srcData = offCtx.getImageData(0, 0, W, H);
 
-    // Simulation grid — coarser than canvas for speed
-    const GS = 0.4;
+    // Wave simulation grid — 60% of canvas for finer ripples
+    const GS = 0.6;
     const GW = Math.max(4, Math.floor(W * GS));
     const GH = Math.max(4, Math.floor(H * GS));
     let cur = new Float32Array(GW * GH);
     let prv = new Float32Array(GW * GH);
-    const DAMP = 0.975;
-    const DISP = 5; // subtle — keeps text from clipping at edges
+    const DAMP = 0.985; // slow decay = long-lasting fluid ripples
+    const DISP = 7;
     let raf = 0;
 
     function loop() {
@@ -331,9 +345,9 @@ function HeroRippleCanvas({
       }
       const tmp = cur; cur = prv; prv = tmp;
 
-      // Pixel displacement — fill bg behind text, displace text pixels
+      // Bilinear pixel displacement — smooth, no jagged edges
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      const [bgR, bgG, bgB] = isDark ? [17, 17, 17] : [255, 255, 255];
+      const bgR = isDark ? 17 : 255, bgG = isDark ? 17 : 255, bgB = isDark ? 17 : 255;
       const dst = cx2d.createImageData(W, H);
       const sd = srcData.data;
       const dd = dst.data;
@@ -342,24 +356,32 @@ function HeroRippleCanvas({
           const gx = Math.min(GW - 2, Math.max(1, (x * GS) | 0));
           const gy = Math.min(GH - 2, Math.max(1, (y * GS) | 0));
           const gi = gy * GW + gx;
-          const ddx = cur[gi + 1] - cur[gi - 1];
-          const ddy = cur[gi + GW] - cur[gi - GW];
-          const sx = Math.max(0, Math.min(W - 1, (x + ddx * DISP + 0.5) | 0));
-          const sy = Math.max(0, Math.min(H - 1, (y + ddy * DISP + 0.5) | 0));
-          const si = (sy * W + sx) << 2;
+          const wdx = cur[gi + 1] - cur[gi - 1];
+          const wdy = cur[gi + GW] - cur[gi - GW];
+          // Bilinear sample position
+          const sxf = x + wdx * DISP;
+          const syf = y + wdy * DISP;
+          const sx0 = Math.max(0, Math.min(W - 2, sxf | 0));
+          const sy0 = Math.max(0, Math.min(H - 2, syf | 0));
+          const fx = sxf - (sxf | 0), fy = syf - (syf | 0);
+          const w00 = (1 - fx) * (1 - fy), w10 = fx * (1 - fy);
+          const w01 = (1 - fx) * fy,       w11 = fx * fy;
+          const i00 = (sy0 * W + sx0) << 2;
+          const i10 = (sy0 * W + sx0 + 1) << 2;
+          const i01 = ((sy0 + 1) * W + sx0) << 2;
+          const i11 = ((sy0 + 1) * W + sx0 + 1) << 2;
           const di = (y * W + x) << 2;
-          const alpha = sd[si + 3];
-          if (alpha > 0) {
-            dd[di] = sd[si];
-            dd[di + 1] = sd[si + 1];
-            dd[di + 2] = sd[si + 2];
-            dd[di + 3] = 255;
-          } else {
-            dd[di] = bgR;
-            dd[di + 1] = bgG;
-            dd[di + 2] = bgB;
-            dd[di + 3] = 255;
-          }
+          // Blend alpha channels from source (text is anti-aliased)
+          const a = sd[i00+3]*w00 + sd[i10+3]*w10 + sd[i01+3]*w01 + sd[i11+3]*w11;
+          const af = a / 255;
+          const r = sd[i00]*w00 + sd[i10]*w10 + sd[i01]*w01 + sd[i11]*w11;
+          const g = sd[i00+1]*w00 + sd[i10+1]*w10 + sd[i01+1]*w01 + sd[i11+1]*w11;
+          const b = sd[i00+2]*w00 + sd[i10+2]*w10 + sd[i01+2]*w01 + sd[i11+2]*w11;
+          // Composite text over background (handles AA edges smoothly)
+          dd[di]   = (r * af + bgR * (1 - af)) | 0;
+          dd[di+1] = (g * af + bgG * (1 - af)) | 0;
+          dd[di+2] = (b * af + bgB * (1 - af)) | 0;
+          dd[di+3] = 255;
         }
       }
       cx2d.putImageData(dst, 0, 0);
