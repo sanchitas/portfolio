@@ -33,14 +33,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sanchita Chamberlain",
     description:
-      "Staff Product Designer at IBM (HashiCorp). Infrastructure design that ships.",
+      "Staff Product Designer at IBM (ex-HashiCorp). Infrastructure design that ships.",
     url: "https://sanchitachamberlain.com",
     siteName: "Sanchita Chamberlain",
     type: "website",
-    images: [{ url: "/favicon.png" }],
+    images: [{ url: "/favicon.png", width: 512, height: 512, alt: "Sanchita Chamberlain" }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Sanchita Chamberlain",
     description:
       "Staff Product Designer. Infrastructure design that ships.",
@@ -60,13 +60,22 @@ export default function RootLayout({
       className={`${dmMono.variable} ${dmSerif.variable} ${bebas.variable} h-full`}
     >
       <head>
+        {/* Prevent dark-mode flash — reads localStorage before first paint */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();`,
           }}
         />
+        {/* Preload wave image so it's ready before rubber-band overscroll occurs */}
+        <link rel="preload" href="/magnific_rlhoJlkxtc.png" as="image" />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* Wave background — position:fixed keeps it stationary during rubber-band overscroll.
+            page-wrapper's solid bg covers this during normal scroll; when page content
+            translates during overscroll the wave becomes visible. */}
+        <div aria-hidden="true" className="wave-bg" />
+        <div className="page-wrapper">{children}</div>
+      </body>
     </html>
   );
 }

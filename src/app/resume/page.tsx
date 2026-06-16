@@ -106,9 +106,9 @@ export default function ResumePage() {
                 authenticated vision that became new hire and intern projects
               </Li>
               <Li>
-                Coached a designer through <Metric>two promotions</Metric>; mentored a
-                PM intern whose PRDs were called excellent by Head of Product, earning
-                a return offer
+                Coached a designer through <Metric>two promotions</Metric>; currently
+                mentoring a PM intern whose PRDs were called excellent by Head of Product,
+                earning a return offer
               </Li>
             </ul>
           </div>

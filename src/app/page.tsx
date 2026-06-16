@@ -312,18 +312,18 @@ function HeroRippleCanvas({
     offCtx.font = `400 ${fs}px ${computed.fontFamily}`;
     offCtx.fillStyle = computed.color;
 
-    // Compute baseline Y to match h1's CSS line-height rendering.
-    // h1 has lineHeight:0.88 (tight). The baseline within each line box =
-    // -halfLeading where halfLeading = (lineBox - fontHeight) / 2.
-    // For tight line-height this is positive, pushing baseline down from line box top.
+    // Compute baseline Y to match CSS line-height:0.88 rendering.
+    // CSS formula: baseline from line-box top = (ascent + lineBox - descent) / 2
+    // This is derived from: baseline = ascent + halfLeading where halfLeading = (L-fontH)/2
+    // = ascent + (L - (A+D))/2 = (2A + L - A - D)/2 = (A + L - D)/2
     const m = offCtx.measureText("SANCHITA");
-    const fontH = (m.fontBoundingBoxAscent ?? m.actualBoundingBoxAscent) +
-                  (m.fontBoundingBoxDescent ?? m.actualBoundingBoxDescent);
-    const halfLeading = (fs * 0.88 - fontH) / 2;
-    const baseline0 = -halfLeading; // baseline Y of first line in canvas px
+    const A = m.fontBoundingBoxAscent ?? m.actualBoundingBoxAscent;
+    const D = m.fontBoundingBoxDescent ?? m.actualBoundingBoxDescent;
+    const L = fs * 0.88; // line box height
+    const baseline0 = (A + L - D) / 2; // baseline Y of first line (always positive, inside canvas)
 
     offCtx.fillText("SANCHITA", 0, baseline0);
-    offCtx.fillText("CHAMBERLAIN", 0, baseline0 + fs * 0.88);
+    offCtx.fillText("CHAMBERLAIN", 0, baseline0 + L);
     const srcData = offCtx.getImageData(0, 0, W, H);
 
     // Wave simulation grid — 60% of canvas for finer ripples

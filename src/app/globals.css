@@ -64,21 +64,40 @@ img::selection, video::selection, canvas::selection {
 html {
   scroll-behavior: smooth;
   scrollbar-gutter: stable both;
-  /* Wave fixed to viewport — shows during rubber-band overscroll (this exact setup worked) */
-  background-color: var(--bg);
-  background-image: url('/magnific_rlhoJlkxtc.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
 }
 
 body {
-  background-color: var(--bg); /* solid — covers html wave during normal scroll */
+  /* No background on body — wave-bg div sits behind, page-wrapper covers it */
   color: var(--fg);
   font-family: var(--font-dm-mono), monospace;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: color 0.2s ease;
+}
+
+/* Fixed wave layer — position:fixed means it does NOT move during rubber-band overscroll */
+.wave-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/magnific_rlhoJlkxtc.png');
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+/* Content layer — solid bg covers wave-bg during normal scroll.
+   During rubber-band this element translates, exposing wave-bg behind it. */
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  background-color: var(--bg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  min-height: 100vh;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
