@@ -62,7 +62,7 @@ export default function RootLayout({
           }}
         />
         {/* Preload overscroll background so it's ready before rubber-band */}
-        <link rel="preload" href="/magnific__digital-illustration-a-seamless-pattern-of-wavy-li__37748.jpeg" as="image" />
+        <link rel="preload" href="/magnific-waves-bg.jpg" as="image" />
       </head>
       <body className="min-h-screen flex flex-col">
         {children}

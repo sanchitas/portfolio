@@ -64,7 +64,7 @@ img::selection, video::selection, canvas::selection {
 html {
   scroll-behavior: smooth;
   background-color: var(--bg);
-  background-image: url('/magnific__digital-illustration-a-seamless-pattern-of-wavy-li__37748.jpeg');
+  background-image: url('/magnific-waves-bg.jpg');
   background-size: 100% auto;
   background-repeat: repeat;
   border: none;
