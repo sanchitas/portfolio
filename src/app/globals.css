@@ -72,10 +72,8 @@ html {
 }
 
 body {
-  background-color: var(--bg);
-  background-image: url('/magnific-waves-bg.jpg');
-  background-size: 100% auto;
-  background-repeat: repeat;
+  /* iOS uses body's background-color (not background-image) for the overscroll zone */
+  background-color: #6DC534;
   border: none;
   outline: none;
   color: var(--fg);
