@@ -12,11 +12,10 @@ export default function ResumePage() {
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
         <header style={{ marginBottom: 32 }}>
-          <h1 style={{ fontFamily: "'Enquix', var(--font-bebas), sans-serif", fontSize: "clamp(22px, 4vw, 38px)", letterSpacing: "-0.01em", lineHeight: 0.9, color: "#000", textTransform: "uppercase", margin: 0, fontWeight: 400 }}>
-            <span style={{ display: "block" }}>Sanchita</span>
-            <span style={{ display: "block" }}>Chamberlain</span>
+          <h1 style={{ fontFamily: "'Enquix', var(--font-bebas), sans-serif", fontSize: "clamp(18px, 3.2vw, 30px)", letterSpacing: "-0.01em", lineHeight: 1, color: "#000", textTransform: "uppercase", margin: 0, fontWeight: 400, whiteSpace: "nowrap" }}>
+            Sanchita Chamberlain
           </h1>
-          <p className="font-mono" style={{ marginTop: 10, fontSize: 13, color: "#666", letterSpacing: "0.02em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          <p className="font-mono" style={{ marginTop: 8, fontSize: 12, color: "#666", letterSpacing: "0.02em" }}>
             <span style={{ fontWeight: 600, color: "#000" }}>Product Designer</span>
             {" · "}
             <a
@@ -147,7 +146,7 @@ export default function ResumePage() {
                 secure feature enablement by <Metric>23%</Metric>
               </Li>
               <Li>
-                Spent the first year at Fastly in customer support engineering,
+                Spent the first year at Fastly in <strong style={{ fontWeight: 700, color: "#000" }}>customer support engineering</strong>,
                 troubleshooting production traffic and edge behavior for enterprise
                 customers, before moving into product design.
               </Li>
