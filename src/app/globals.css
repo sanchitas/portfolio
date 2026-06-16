@@ -72,7 +72,10 @@ html {
 }
 
 body {
-  background-color: transparent;
+  background-color: var(--bg);
+  background-image: url('/magnific-waves-bg.jpg');
+  background-size: 100% auto;
+  background-repeat: repeat;
   border: none;
   outline: none;
   color: var(--fg);
