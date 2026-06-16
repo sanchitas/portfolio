@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useLayoutEffect, useState } from "react";
 import { links, projects, about, type Project } from "@/content";
 import FastlyConversionDiagram from "@/components/FastlyConversionDiagram";
 
@@ -97,7 +97,7 @@ function ProjectMedia({ p, index }: { p: Project; index: number }) {
       className="w-full rounded-md overflow-hidden"
       style={{
         aspectRatio: "16 / 9",
-        backgroundColor: isBrand ? "var(--surface-brand)" : "var(--surface)",
+        backgroundColor: isBrand ? "#fff" : "var(--surface)",
         border: "1px solid var(--border)",
         position: "relative",
       }}
@@ -144,8 +144,8 @@ function ProjectMedia({ p, index }: { p: Project; index: number }) {
             style={{ objectFit: isBrand ? "contain" : "cover" }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="font-mono" style={{ fontSize: 9, color: "var(--fg-faint)", letterSpacing: "0.08em" }}>
+          <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: "#39FF14" }}>
+            <span className="font-mono" style={{ fontSize: 9, color: "#000", letterSpacing: "0.08em" }}>
               {p.placeholder}
             </span>
           </div>
@@ -271,13 +271,13 @@ function HeroRippleCanvas({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     const h1 = h1Ref.current;
     if (!canvas || !container || !h1) return;
 
-    const ctx = canvas.getContext("2d", { alpha: true, willReadFrequently: true });
+    const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
     if (!ctx) return;
 
     const cvs: HTMLCanvasElement = canvas;
@@ -331,7 +331,9 @@ function HeroRippleCanvas({
       }
       const tmp = cur; cur = prv; prv = tmp;
 
-      // Pixel displacement — sample source at offset position from wave gradient
+      // Pixel displacement — fill bg behind text, displace text pixels
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      const [bgR, bgG, bgB] = isDark ? [17, 17, 17] : [255, 255, 255];
       const dst = cx2d.createImageData(W, H);
       const sd = srcData.data;
       const dd = dst.data;
@@ -346,10 +348,18 @@ function HeroRippleCanvas({
           const sy = Math.max(0, Math.min(H - 1, (y + ddy * DISP + 0.5) | 0));
           const si = (sy * W + sx) << 2;
           const di = (y * W + x) << 2;
-          dd[di] = sd[si];
-          dd[di + 1] = sd[si + 1];
-          dd[di + 2] = sd[si + 2];
-          dd[di + 3] = sd[si + 3];
+          const alpha = sd[si + 3];
+          if (alpha > 0) {
+            dd[di] = sd[si];
+            dd[di + 1] = sd[si + 1];
+            dd[di + 2] = sd[si + 2];
+            dd[di + 3] = 255;
+          } else {
+            dd[di] = bgR;
+            dd[di + 1] = bgG;
+            dd[di + 2] = bgB;
+            dd[di + 3] = 255;
+          }
         }
       }
       cx2d.putImageData(dst, 0, 0);
@@ -391,7 +401,7 @@ function HeroRippleCanvas({
       cnt.removeEventListener("mousemove", onMove);
       cnt.removeEventListener("mousedown", splash);
     };
-  }, [containerRef, h1Ref]);
+  }, [containerRef, h1Ref]); // eslint-disable-line
 
   return (
     <canvas
@@ -457,7 +467,6 @@ function HeroName() {
           whiteSpace: "nowrap",
           position: "relative",
           zIndex: 1,
-          opacity: hovered ? 0 : 1,
         }}
       >
         Sanchita
@@ -570,7 +579,7 @@ export default function Home() {
           className="font-mono"
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
           style={{
-            fontSize: 22,
+            fontSize: 30,
             color: "var(--fg)",
             background: "none",
             border: "none",
