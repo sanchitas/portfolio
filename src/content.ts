@@ -22,7 +22,7 @@ export const links = {
 
 export const about = {
   statement:
-    "Product Designer from the Bay Area, currently at IBM (ex-HashiCorp). Previously worked at Fastly, Zurich Insurance, TSYS, and Johnson & Johnson.",
+    "I'm a Product Designer from the Bay Area, currently at IBM (ex-HashiCorp). I previously worked at Fastly, where I pivoted into design from customer support engineering.",
   details: {
     currently:
       "Product Designer, HashiCorp (IBM)\nTerraform Registry · Publisher Experience",

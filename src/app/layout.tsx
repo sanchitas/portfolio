@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   title: "Sanchita Chamberlain",
   description:
     "Staff Product Designer. I design the system around the product — the phasing, the architecture, the cross-functional alignment that makes it shippable.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Sanchita Chamberlain",
     description:
@@ -32,12 +37,14 @@ export const metadata: Metadata = {
     url: "https://sanchitachamberlain.com",
     siteName: "Sanchita Chamberlain",
     type: "website",
+    images: [{ url: "/favicon.png" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Sanchita Chamberlain",
     description:
       "Staff Product Designer. Infrastructure design that ships.",
+    images: ["/favicon.png"],
   },
 };
 
@@ -51,13 +58,17 @@ export default function RootLayout({
       lang="en"
       className={`${dmMono.variable} ${dmSerif.variable} ${bebas.variable} h-full`}
     >
-      {/* Prevent dark-mode flash — reads localStorage before first paint */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();`,
-        }}
-      />
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        {/* Prevent dark-mode flash — reads localStorage before first paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
+        <div className="page-wrapper">{children}</div>
+      </body>
     </html>
   );
 }

@@ -12,8 +12,9 @@ export default function ResumePage() {
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
         <header style={{ marginBottom: 32 }}>
-          <h1 className="font-mono" style={{ fontSize: "clamp(32px, 8vw, 48px)", letterSpacing: "-0.02em", color: "#000", textTransform: "uppercase", margin: 0, fontWeight: 700 }}>
-            Sanchita Chamberlain
+          <h1 style={{ fontFamily: "'Enquix', var(--font-bebas), sans-serif", fontSize: "clamp(28px, 6vw, 52px)", letterSpacing: "-0.01em", lineHeight: 0.9, color: "#000", textTransform: "uppercase", margin: 0, fontWeight: 400 }}>
+            <span style={{ display: "block" }}>Sanchita</span>
+            <span style={{ display: "block" }}>Chamberlain</span>
           </h1>
           <p className="font-mono" style={{ marginTop: 10, fontSize: 13, color: "#666", letterSpacing: "0.02em" }}>
             <span style={{ fontWeight: 600, color: "#000" }}>Product Designer</span>
@@ -31,7 +32,7 @@ export default function ResumePage() {
               rel="noopener noreferrer"
               className="hover:text-black transition-colors"
             >
-              LinkedIn
+              linkedin.com/in/sanchitachamberlain
             </a>
             {" · "}
             <a

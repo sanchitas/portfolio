@@ -41,9 +41,30 @@ function ProjectMedia({ p, index }: { p: Project; index: number }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const dispRef = useRef<SVGFEDisplacementMapElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const animRef = useRef<number>(0);
   const [inView, setInView] = useState(false);
   const isBrand = p.tags.includes("Brand");
   const filterId = `water-${index}`;
+
+  function runReveal() {
+    const dispEl = dispRef.current;
+    if (!dispEl) return;
+    cancelAnimationFrame(animRef.current);
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / 1600, 1);
+      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      dispEl.setAttribute("scale", (32 * (1 - eased)).toFixed(2));
+      if (t < 1) animRef.current = requestAnimationFrame(tick);
+    };
+    animRef.current = requestAnimationFrame(tick);
+  }
+
+  function resetDistortion() {
+    cancelAnimationFrame(animRef.current);
+    const dispEl = dispRef.current;
+    if (dispEl) dispEl.setAttribute("scale", "32");
+  }
 
   useEffect(() => {
     const el = containerRef.current;
@@ -67,19 +88,8 @@ function ProjectMedia({ p, index }: { p: Project; index: number }) {
 
   useEffect(() => {
     if (!inView) return;
-    const dispEl = dispRef.current;
-    if (!dispEl) return;
-    const startScale = 32;
-    const duration = 1600;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-      dispEl.setAttribute("scale", (startScale * (1 - eased)).toFixed(2));
-      if (t < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [inView]);
+    runReveal();
+  }, [inView]); // eslint-disable-line
 
   return (
     <div
@@ -91,6 +101,8 @@ function ProjectMedia({ p, index }: { p: Project; index: number }) {
         border: "1px solid var(--border)",
         position: "relative",
       }}
+      onMouseEnter={() => { if (inView) runReveal(); }}
+      onMouseLeave={() => { if (inView) resetDistortion(); }}
     >
       <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }} aria-hidden="true">
         <defs>
@@ -119,7 +131,8 @@ function ProjectMedia({ p, index }: { p: Project; index: number }) {
             muted
             loop
             playsInline
-            className="w-full h-full object-cover"
+            className="h-full object-cover"
+            style={{ width: "100%" }}
           >
             <source src={`/${p.video}`} type="video/mp4" />
           </video>
@@ -155,13 +168,8 @@ function ProjectRow({ p, index }: { p: Project; index: number }) {
       return;
     }
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -5% 0px" }
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -239,9 +247,6 @@ function renderIntro(text: string) {
     "IBM",
     "HashiCorp",
     "Fastly",
-    "Zurich Insurance",
-    "TSYS",
-    "Johnson & Johnson",
   ];
 
   const regex = new RegExp(`(${highlights.join("|")})`, "g");
@@ -257,18 +262,159 @@ function renderIntro(text: string) {
   );
 }
 
+function HeroRippleCanvas({
+  containerRef,
+  h1Ref,
+}: {
+  containerRef: React.RefObject<HTMLDivElement>;
+  h1Ref: React.RefObject<HTMLHeadingElement>;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    const h1 = h1Ref.current;
+    if (!canvas || !container || !h1) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true, willReadFrequently: true });
+    if (!ctx) return;
+
+    const cvs: HTMLCanvasElement = canvas;
+    const cnt: HTMLDivElement = container;
+    const cx2d: CanvasRenderingContext2D = ctx;
+    const h1el: HTMLHeadingElement = h1;
+
+    // DPR-aware resolution: full res on 2x screens, half on 1x — crisp on Retina
+    const rect = cnt.getBoundingClientRect();
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const S = DPR * 0.5; // 0.5 on 1x, 1.0 on 2x
+    const W = Math.max(4, Math.ceil(rect.width * S));
+    const H = Math.max(4, Math.ceil(rect.height * S));
+    cvs.width = W;
+    cvs.height = H;
+    cvs.style.width = rect.width + "px";
+    cvs.style.height = rect.height + "px";
+
+    // Render name text into offscreen buffer matching h1's computed font
+    const off = document.createElement("canvas");
+    off.width = W;
+    off.height = H;
+    const offCtx = off.getContext("2d", { willReadFrequently: true });
+    if (!offCtx) return;
+
+    const computed = window.getComputedStyle(h1el);
+    const fs = parseFloat(computed.fontSize) * S;
+    offCtx.font = `400 ${fs}px ${computed.fontFamily}`;
+    offCtx.fillStyle = computed.color;
+    offCtx.textBaseline = "top";
+    offCtx.fillText("SANCHITA", 0, 0);
+    offCtx.fillText("CHAMBERLAIN", 0, fs * 0.88);
+    const srcData = offCtx.getImageData(0, 0, W, H);
+
+    // Simulation grid — coarser than canvas for speed
+    const GS = 0.4;
+    const GW = Math.max(4, Math.floor(W * GS));
+    const GH = Math.max(4, Math.floor(H * GS));
+    let cur = new Float32Array(GW * GH);
+    let prv = new Float32Array(GW * GH);
+    const DAMP = 0.975;
+    const DISP = 5; // subtle — keeps text from clipping at edges
+    let raf = 0;
+
+    function loop() {
+      for (let y = 1; y < GH - 1; y++) {
+        for (let x = 1; x < GW - 1; x++) {
+          const i = y * GW + x;
+          prv[i] = ((cur[i - 1] + cur[i + 1] + cur[i - GW] + cur[i + GW]) * 0.5 - prv[i]) * DAMP;
+        }
+      }
+      const tmp = cur; cur = prv; prv = tmp;
+
+      // Pixel displacement — sample source at offset position from wave gradient
+      const dst = cx2d.createImageData(W, H);
+      const sd = srcData.data;
+      const dd = dst.data;
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          const gx = Math.min(GW - 2, Math.max(1, (x * GS) | 0));
+          const gy = Math.min(GH - 2, Math.max(1, (y * GS) | 0));
+          const gi = gy * GW + gx;
+          const ddx = cur[gi + 1] - cur[gi - 1];
+          const ddy = cur[gi + GW] - cur[gi - GW];
+          const sx = Math.max(0, Math.min(W - 1, (x + ddx * DISP + 0.5) | 0));
+          const sy = Math.max(0, Math.min(H - 1, (y + ddy * DISP + 0.5) | 0));
+          const si = (sy * W + sx) << 2;
+          const di = (y * W + x) << 2;
+          dd[di] = sd[si];
+          dd[di + 1] = sd[si + 1];
+          dd[di + 2] = sd[si + 2];
+          dd[di + 3] = sd[si + 3];
+        }
+      }
+      cx2d.putImageData(dst, 0, 0);
+      raf = requestAnimationFrame(loop);
+    }
+    raf = requestAnimationFrame(loop);
+
+    function splash(e: MouseEvent) {
+      const r2 = cnt.getBoundingClientRect();
+      const cx = Math.round(((e.clientX - r2.left) / r2.width) * GW);
+      const cy = Math.round(((e.clientY - r2.top) / r2.height) * GH);
+      const amt = e.type === "mousedown" ? 2.2 : 1.1;
+      const r = 7;
+      for (let dy = -r; dy <= r; dy++) {
+        for (let dx = -r; dx <= r; dx++) {
+          const d2 = dx * dx + dy * dy;
+          if (d2 <= r * r) {
+            const ix = cx + dx, iy = cy + dy;
+            if (ix > 0 && ix < GW - 1 && iy > 0 && iy < GH - 1) {
+              cur[iy * GW + ix] += amt * (1 - Math.sqrt(d2) / r);
+            }
+          }
+        }
+      }
+    }
+
+    let tLast = 0;
+    function onMove(e: MouseEvent) {
+      const now = performance.now();
+      if (now - tLast < 16) return;
+      tLast = now;
+      splash(e);
+    }
+    cnt.addEventListener("mousemove", onMove);
+    cnt.addEventListener("mousedown", splash);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      cnt.removeEventListener("mousemove", onMove);
+      cnt.removeEventListener("mousedown", splash);
+    };
+  }, [containerRef, h1Ref]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none", zIndex: 2 }}
+      aria-hidden="true"
+    />
+  );
+}
+
 function HeroName() {
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const h1Ref = useRef<HTMLHeadingElement>(null);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const fit = () => {
-      const wrap = wrapRef.current;
+      const container = containerRef.current;
       const h1 = h1Ref.current;
-      if (!wrap || !h1) return;
-      const available = wrap.getBoundingClientRect().width;
+      if (!container || !h1) return;
+      const available = container.getBoundingClientRect().width;
       // "CHAMBERLAIN" is the longer line — binary-search font size to fill container
-      let lo = 10, hi = 600;
+      let lo = 10, hi = 130;
       h1.style.fontSize = `${hi}px`;
       while (hi - lo > 0.5) {
         const mid = (lo + hi) / 2;
@@ -287,12 +433,15 @@ function HeroName() {
 
   return (
     <div
-      ref={wrapRef}
+      ref={containerRef}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
         width: "100%",
         maxWidth: "min(900px, 100%)",
         marginBottom: "clamp(16px, 2.5vh, 28px)",
-        overflow: "hidden",
+        position: "relative",
+        cursor: "default",
       }}
     >
       <h1
@@ -306,12 +455,21 @@ function HeroName() {
           margin: 0,
           textTransform: "uppercase",
           whiteSpace: "nowrap",
+          position: "relative",
+          zIndex: 1,
+          opacity: hovered ? 0 : 1,
         }}
       >
         Sanchita
         <br />
         Chamberlain
       </h1>
+      {hovered && (
+        <HeroRippleCanvas
+          containerRef={containerRef as React.RefObject<HTMLDivElement>}
+          h1Ref={h1Ref as React.RefObject<HTMLHeadingElement>}
+        />
+      )}
     </div>
   );
 }
@@ -377,27 +535,25 @@ export default function Home() {
       className="flex flex-col items-center pb-16 px-8 md:px-24 lg:px-40 font-mono"
       style={{ paddingTop: "clamp(32px, 5vh, 56px)" }}
     >
-      {/* ── Utility bar ── */}
+      {/* ── Nav row: last visitor left, theme toggle right ── */}
       <div
         style={{
           width: "100%",
           maxWidth: "min(900px, 100%)",
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           alignItems: "center",
-          gap: 14,
-          marginBottom: "clamp(40px, 7vh, 72px)",
+          marginBottom: "clamp(28px, 5vh, 48px)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span
             style={{
+              flexShrink: 0,
               width: 6,
               height: 6,
               borderRadius: 999,
-              backgroundColor: dark ? "#fff" : "#000",
-              display: "inline-block",
-              flexShrink: 0,
+              backgroundColor: "#39FF14",
               animation: "visitor-blink 1.2s infinite ease-in-out",
             }}
           />
@@ -414,12 +570,11 @@ export default function Home() {
           className="font-mono"
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
           style={{
-            fontSize: 18,
-            color: "var(--fg-faint)",
+            fontSize: 22,
+            color: "var(--fg)",
             background: "none",
-            border: "1px solid var(--border-mid)",
-            borderRadius: 4,
-            padding: "8px 14px",
+            border: "none",
+            padding: 0,
             cursor: "pointer",
             lineHeight: 1,
             flexShrink: 0,
@@ -438,14 +593,14 @@ export default function Home() {
           width: "100%",
           maxWidth: "min(900px, 100%)",
           display: "flex",
-          gap: 20,
+          gap: 36,
           marginBottom: "clamp(48px, 8vh, 88px)",
         }}
       >
         <a
           href={`mailto:${links.email}`}
           className="font-mono"
-          style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+          style={{ fontSize: 14, fontWeight: 700, color: "var(--fg-muted)", textDecoration: "underline" }}
         >
           Email ↗
         </a>
@@ -454,14 +609,14 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
           className="font-mono"
-          style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+          style={{ fontSize: 14, fontWeight: 700, color: "var(--fg-muted)", textDecoration: "underline" }}
         >
           LinkedIn ↗
         </a>
         <a
           href="/resume"
           className="font-mono"
-          style={{ fontSize: 10, color: "var(--fg-faint)", textDecoration: "underline" }}
+          style={{ fontSize: 14, fontWeight: 700, color: "var(--fg-muted)", textDecoration: "underline" }}
         >
           Resume →
         </a>
