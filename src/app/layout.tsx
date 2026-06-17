@@ -23,6 +23,7 @@ const bebas = Bebas_Neue({
 
 export const metadata: Metadata = {
   title: "Sanchita Chamberlain",
+  icons: { icon: '/favicon.png', shortcut: '/favicon.png' },
   description:
     "Staff Product Designer. I design the system around the product — the phasing, the architecture, the cross-functional alignment that makes it shippable.",
   openGraph: {
