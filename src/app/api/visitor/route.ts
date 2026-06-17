@@ -21,7 +21,8 @@ export async function POST(req: NextRequest) {
   try {
     const { blobs } = await list({ prefix: BLOB_PATH });
     if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url, { cache: 'no-store' });
+      // Bust CDN cache (public blobs have max-age=30d) by appending a timestamp
+      const res = await fetch(`${blobs[0].url}?t=${Date.now()}`, { cache: 'no-store' });
       if (res.ok) previous = await res.json();
     }
   } catch {
