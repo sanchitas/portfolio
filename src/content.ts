@@ -151,7 +151,7 @@ export const projects: Project[] = [
     title: "Introducing Environments to Registry",
     company: "HashiCorp / IBM",
     description:
-      "Adopted accessible design system standards and rebuilt the browse-and-consume UX — environment tagging, version filtering, and streamlined component discovery for enterprise teams.",
+      "Introduced environments as a first-class concept in the registry — extending reserved key tagging to the version level to enable advanced filtering and granular control over which artifact versions reach which deployment environments.",
     tags: ["Design Systems", "Enterprise", "Developer Experience"],
     link: "https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/organizations/manage-reserved-tags",
     linkLabel: "Docs",
