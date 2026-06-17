@@ -37,7 +37,7 @@ function BeforeAfterCard({ video, beforeImage, afterImage }: { video?: string; b
 }
 
 // ── Media surface ──
-function ProjectMedia({ p, index }: { p: Project; index: number }) {
+function ProjectMedia({ p }: { p: Project }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isBrand = p.tags.includes("Brand");
@@ -141,7 +141,7 @@ function ProjectRow({ p, index }: { p: Project; index: number }) {
         className="project-row__media"
         style={{ ...appear, transition: "opacity 0.7s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)" }}
       >
-        <ProjectMedia p={p} index={index} />
+        <ProjectMedia p={p} />
       </div>
       <div
         className="project-row__content"
@@ -383,7 +383,7 @@ export default function Home() {
           gap: 36,
           paddingLeft: 10,
           marginTop: "clamp(20px, 3vh, 28px)",
-          marginBottom: "clamp(48px, 8vh, 88px)",
+          marginBottom: "clamp(24px, 3vh, 32px)",
         }}
       >
         <a
@@ -414,7 +414,7 @@ export default function Home() {
       {/* ─── WORK ─── */}
       <section
         className="w-full"
-        style={{ marginTop: "clamp(56px, 8vh, 96px)", maxWidth: "min(900px, 100%)" }}
+        style={{ marginTop: "clamp(16px, 2vh, 24px)", maxWidth: "min(900px, 100%)", paddingLeft: 10 }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
           {projects.map((p, i) => (
