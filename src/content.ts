@@ -55,10 +55,10 @@ export const projects: Project[] = [
   // ─── Row 1: video + static ───
   {
     year: "2025",
-    title: "Public Terraform Registry Redesign",
+    title: "Public Registry Redesign",
     company: "HashiCorp / IBM",
     description:
-      "Shipped full HDS adoption and accessibility compliance for the registry serving 1M+ monthly visitors and 16B all-time downloads — in under two weeks with coding agents. Foundation for the post-unification Terraform community experience.",
+      "Shipped a full design system migration and accessibility overhaul for a developer registry serving 1M+ monthly visitors and 16B all-time downloads — in under two weeks with coding agents. Foundation for the platform's unified community experience.",
     tags: ["Design Systems", "Developer Experience", "AI Tools"],
     link: "https://registry.terraform.io",
     linkLabel: "Live",
@@ -79,10 +79,10 @@ export const projects: Project[] = [
   // ─── Row 2: video + static ───
   {
     year: "2025",
-    title: "Bulk Tagging — Registry Control",
+    title: "Bulk Tagging & Access Control",
     company: "HashiCorp / IBM",
     description:
-      "First bulk action shipped in all of Terraform. Extended tagging to usage control — binding modules and providers to projects at scale. Two adjacent teams now building on the pattern.",
+      "First bulk action pattern shipped across the platform. Extended tagging to access control — binding packages and integrations to projects at scale. Two adjacent teams now building on it as a platform standard.",
     tags: ["Enterprise", "0→1", "Systems Thinking"],
     link: "https://developer.hashicorp.com/terraform/cloud-docs/registry/manage/tags",
     linkLabel: "Docs",
@@ -104,10 +104,10 @@ export const projects: Project[] = [
   // ─── Row 3: video + video ───
   {
     year: "2021",
-    title: "Fastly RBAC — Permission Recipes",
+    title: "RBAC & Permission Templates",
     company: "Fastly",
     description:
-      "Redesigned from 4 fixed roles to a flexible system with granular custom permissions and product-based templates — informed by 30 customer interviews. Pitched directly to the CTO and CEO.",
+      "Redesigned from 4 fixed roles to a flexible system with custom granular permissions and pre-built templates — informed by 30 customer interviews. Pitched directly to the CTO and CEO.",
     tags: ["Enterprise", "0→1"],
     video: "fastly-rbac.mp4",
     placeholder: "RBAC role management walkthrough",
@@ -124,10 +124,10 @@ export const projects: Project[] = [
   },
   {
     year: "2025",
-    title: "Private Artifact Redesign",
+    title: "HCP Terraform Registry Redesign",
     company: "HashiCorp / IBM",
     description:
-      "Adopted HDS across both private registries, resolved years of accumulated design debt, and split a mixed-persona UX into distinct consumer and publisher workflows. Grassroots foundation for the Terraform Developer Portal.",
+      "Adopted the design system across both internal component libraries, resolved years of accumulated design debt, and split a mixed-persona UX into distinct consumer and publisher workflows. Grassroots foundation for the platform's developer portal.",
     tags: ["Design Systems", "Platform", "0→1"],
     link: "https://developer.hashicorp.com/terraform/cloud-docs/registry/manage/tags",
     linkLabel: "Docs",
@@ -138,20 +138,20 @@ export const projects: Project[] = [
   // ─── Row 4: video + video ───
   {
     year: "2025",
-    title: "Registry Search in HCP Terraform",
+    title: "Unified Registry Artifact Discovery",
     company: "HashiCorp / IBM",
     description:
-      "Prototyped global search across public and private registries inside HCP Terraform — making logging in a feature, not a mandate, post-unification.",
+      "Prototyped global search across public and private registries inside the platform — making authentication feel like a benefit, not a gate.",
     tags: ["Vision", "AI Tools", "Developer Experience"],
     video: "search_agent.mp4",
     placeholder: "Registry search prototype walkthrough",
   },
   {
     year: "2025",
-    title: "Terraform Registry Private Library",
+    title: "Introducing Environments to Registry",
     company: "HashiCorp / IBM",
     description:
-      "Adopted accessible design system standards and rebuilt the browse-and-consume UX — environment tagging, version filtering, and streamlined module discovery for enterprise teams.",
+      "Adopted accessible design system standards and rebuilt the browse-and-consume UX — environment tagging, version filtering, and streamlined component discovery for enterprise teams.",
     tags: ["Design Systems", "Enterprise", "Developer Experience"],
     link: "https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/organizations/manage-reserved-tags",
     linkLabel: "Docs",
@@ -161,10 +161,10 @@ export const projects: Project[] = [
   // ─── Row 5: video + special ───
   {
     year: "2025",
-    title: "Publish Stack Component Configs",
+    title: "Infrastructure Template Publishing (Stacks CC)",
     company: "HashiCorp / IBM",
     description:
-      "Designed the end-to-end publish flow for Terraform Stacks — enabling teams to share and consume reusable infrastructure configurations as a first-class product experience. The consumption model at the heart of the Stacks ecosystem.",
+      "Designed the end-to-end publish flow for reusable infrastructure templates — enabling teams to share and consume standardized configurations as a first-class product experience. The consumption model at the heart of the ecosystem.",
     tags: ["0→1", "Developer Experience"],
     video: "stack-publish.mp4",
     link: "https://developer.hashicorp.com/terraform/language/block/stack/tfcomponent",
