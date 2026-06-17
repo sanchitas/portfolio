@@ -16,12 +16,12 @@ function BeforeAfterCard({ video, beforeImage, afterImage }: { video?: string; b
   return (
     <div className="relative w-full h-full before-after-card">
       <div className={`before-after-layer before-after-layer--before ${showAfter ? "" : "before-after-layer--visible"}`}>
-        <img src={`/${beforeImage}`} alt="Before" className="before-after-media" />
+        <img src={`/${beforeImage}`} alt="Before" className="before-after-media" loading="lazy" />
       </div>
 
       <div className={`before-after-layer before-after-layer--after ${showAfter ? "before-after-layer--visible" : ""}`}>
         {afterImage ? (
-          <img src={`/${afterImage}`} alt="After" className="before-after-media" />
+          <img src={`/${afterImage}`} alt="After" className="before-after-media" loading="lazy" />
         ) : video ? (
           <video autoPlay muted loop playsInline className="before-after-media">
             <source src={`/${video}`} type="video/mp4" />
@@ -80,6 +80,7 @@ function ProjectMedia({ p }: { p: Project }) {
             muted
             loop
             playsInline
+            preload="none"
             className="h-full object-cover"
             style={{ width: "100%" }}
           >
@@ -90,6 +91,7 @@ function ProjectMedia({ p }: { p: Project }) {
             src={`/${p.image}`}
             alt={p.title}
             className="w-full h-full"
+            loading="lazy"
             style={{ objectFit: isBrand ? "contain" : "cover" }}
           />
         ) : (
