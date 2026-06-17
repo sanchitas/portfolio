@@ -127,7 +127,7 @@ export const projects: Project[] = [
     title: "HCP Terraform Registry Redesign",
     company: "HashiCorp / IBM",
     description:
-      "Adopted the design system across both internal component libraries, resolved years of accumulated design debt, and split a mixed-persona UX into distinct consumer and publisher workflows. Grassroots foundation for the platform's developer portal.",
+      "Adopted the design system across both internal component libraries, resolved years of accumulated design debt, and split a mixed-persona UX into distinct consumer and publisher workflows.",
     tags: ["Design Systems", "Platform", "0→1"],
     link: "https://developer.hashicorp.com/terraform/cloud-docs/registry/manage/tags",
     linkLabel: "Docs",
