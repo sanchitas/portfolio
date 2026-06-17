@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ResumePDFActions from "@/components/ResumePDFActions";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "Resume — Sanchita Chamberlain",
@@ -20,6 +21,14 @@ export default function ResumePage() {
       }}
     >
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
+        {/* Nav row — hidden in print */}
+        <div
+          className="print:!hidden"
+          style={{ display: "flex", justifyContent: "flex-end", marginBottom: 24 }}
+        >
+          <ThemeToggle />
+        </div>
+
         {/* Header */}
         <header className="resume-header" style={{ marginBottom: 20 }}>
           <h1
