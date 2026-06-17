@@ -168,7 +168,7 @@ export default function ResumePage() {
         </section>
 
         {/* Education */}
-        <section>
+        <section className="resume-edu">
           <h2
             className="font-mono resume-section-title"
             style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}
