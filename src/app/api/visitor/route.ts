@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
       year: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
+      timeZone: 'UTC',
+      timeZoneName: 'short',
     });
     try {
       await put(BLOB_PATH, JSON.stringify({ city, region, country, timestamp } satisfies VisitorData), {
