@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ResumePDFActions from "@/components/ResumePDFActions";
 
 export const metadata: Metadata = {
   title: "Resume — Sanchita Chamberlain",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ResumePage() {
   return (
-    <main className="min-h-screen bg-white px-5 py-12 sm:px-10 sm:py-16 print:!p-0">
+    <main className="min-h-screen bg-white px-5 pt-20 pb-12 sm:px-10 sm:pt-28 sm:pb-16 print:!p-0">
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
         <header style={{ marginBottom: 20 }}>
@@ -181,13 +182,7 @@ export default function ResumePage() {
           >
             ← Back to portfolio
           </a>
-          <a
-            href="/resume.pdf"
-            className="font-mono"
-            style={{ fontSize: 12, color: "#aaa" }}
-          >
-            Download PDF ↓
-          </a>
+          <ResumePDFActions />
         </div>
       </div>
     </main>
