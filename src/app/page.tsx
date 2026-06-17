@@ -278,8 +278,7 @@ function HeroName() {
 
 export default function Home() {
   const [dark, setDark] = useState(false);
-  const [lastVisitor, setLastVisitor] = useState("No previous visitor data");
-  const [visitorLocation, setVisitorLocation] = useState<string | null>(null);
+  const [lastVisitorLabel, setLastVisitorLabel] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -289,39 +288,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
-    fetch("https://ipapi.co/json/", { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error("Location fetch failed");
-        return res.json();
+    fetch("/api/visitor", { method: "POST" })
+      .then((res) => res.json())
+      .then(({ previous }) => {
+        if (!previous) return;
+        const parts = [previous.city, previous.region, previous.country].filter(Boolean);
+        setLastVisitorLabel(`Last visitor: ${parts.join(", ")} · ${previous.timestamp}`);
       })
-      .then((data) => {
-        const parts = [data.city, data.region_code, data.country_code].filter(Boolean);
-        if (parts.length) {
-          setVisitorLocation(parts.join(", "));
-        }
-      })
-      .catch(() => {
-        setVisitorLocation("Unknown location");
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  useEffect(() => {
-    const previous = localStorage.getItem("lastVisitor");
-    if (previous) {
-      setLastVisitor(previous);
-    }
-
-    const now = new Date().toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-    });
-    localStorage.setItem("lastVisitor", now);
+      .catch(() => {});
   }, []);
 
   function toggleTheme() {
@@ -348,25 +322,26 @@ export default function Home() {
           marginBottom: "clamp(20px, 3vh, 32px)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 8, paddingLeft: 10 }}>
-          <span
-            style={{
-              flexShrink: 0,
-              width: 6,
-              height: 6,
-              borderRadius: 999,
-              backgroundColor: "#CCFF00",
-              animation: "visitor-blink 1.2s infinite ease-in-out",
-            }}
-          />
-          <p
-            className="font-mono"
-            style={{ fontSize: 10, color: "var(--fg-muted)", margin: 0, lineHeight: 1.5 }}
-          >
-            {lastVisitor}
-            {visitorLocation ? ` · ${visitorLocation}` : ""}
-          </p>
-        </div>
+        {lastVisitorLabel && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, paddingLeft: 10 }}>
+            <span
+              style={{
+                flexShrink: 0,
+                width: 6,
+                height: 6,
+                borderRadius: 999,
+                backgroundColor: "#CCFF00",
+                animation: "visitor-blink 1.2s infinite ease-in-out",
+              }}
+            />
+            <p
+              className="font-mono"
+              style={{ fontSize: 10, color: "var(--fg-muted)", margin: 0, lineHeight: 1.5 }}
+            >
+              {lastVisitorLabel}
+            </p>
+          </div>
+        )}
         <button
           onClick={toggleTheme}
           className="font-mono"

@@ -63,6 +63,7 @@ img::selection, video::selection, canvas::selection {
 
 html {
   scroll-behavior: smooth;
+  /* Desktop overscroll zone shows the waves image; var(--bg) keeps it seamless with page content */
   background-color: var(--bg);
   background-image: url('/magnific-waves-bg.jpg');
   background-size: 100% auto;
@@ -72,14 +73,14 @@ html {
 }
 
 body {
-  /* iOS uses body's background-color (not background-image) for the overscroll zone */
-  background-color: #6DC534;
+  /* iOS rubber-band overscroll uses body's background-color — #CCFF00 so it matches desktop */
+  background-color: #CCFF00;
   border: none;
   outline: none;
   color: var(--fg);
   font-family: var(--font-dm-mono), monospace;
   font-weight: 300;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: color 0.2s ease;
