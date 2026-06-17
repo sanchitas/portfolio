@@ -91,12 +91,6 @@ body {
   }
 }
 
-@media (max-width: 900px) {
-  .projects-section {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
 
 .project-row {
   display: flex;
@@ -199,43 +193,41 @@ body {
 @media print {
   @page {
     size: letter;
-    margin: 0.65in 0.85in;
+    margin: 0.55in 0.75in;
   }
   :root,
   [data-theme="dark"] {
     --bg: #fff;
     --fg: #000;
-    --fg-muted: rgba(0, 0, 0, 0.6);
-    --fg-faint: rgba(0, 0, 0, 0.45);
-    --border: rgba(0, 0, 0, 0.1);
-    --border-mid: rgba(0, 0, 0, 0.15);
+    --fg-muted: rgba(0, 0, 0, 0.65);
+    --fg-faint: rgba(0, 0, 0, 0.5);
+    --border: rgba(0, 0, 0, 0.12);
+    --border-mid: rgba(0, 0, 0, 0.18);
   }
-  body {
-    background-color: #fff !important;
+  body { background-color: #fff !important; }
+
+  /* Force mono font everywhere in the resume */
+  .resume-main,
+  .resume-main * {
+    font-family: var(--font-dm-mono), monospace !important;
   }
-  .resume-main {
-    padding: 0 !important;
+  /* Links: inherit color, no underline */
+  .resume-main a {
+    color: inherit !important;
+    text-decoration: none !important;
   }
-  .resume-name {
-    font-size: 40px !important;
-  }
-  .resume-experience {
-    margin-bottom: 20px !important;
-  }
-  .resume-job {
-    margin-bottom: 20px !important;
-  }
-  .resume-job-header {
-    margin-bottom: 10px !important;
-  }
-  .resume-section-title {
-    margin-bottom: 10px !important;
-  }
-  .resume-bullets {
-    gap: 8px !important;
-  }
-  .resume-bullet {
-    font-size: 12px !important;
-    line-height: 1.65 !important;
-  }
+
+  .resume-main    { padding: 0 !important; }
+  .resume-header  { margin-bottom: 8px !important; }
+  .resume-name    { font-size: 17px !important; font-weight: 700 !important; letter-spacing: 0.1em !important; }
+  .resume-contact { font-size: 9px !important; margin-top: 4px !important; }
+  .resume-divider { margin-top: 8px !important; margin-bottom: 10px !important; }
+
+  .resume-experience   { margin-bottom: 10px !important; }
+  .resume-section-title { font-size: 11px !important; margin-bottom: 6px !important; }
+  .resume-job          { margin-bottom: 10px !important; }
+  .resume-job-header   { margin-bottom: 5px !important; font-size: 11px !important; }
+
+  .resume-bullets { gap: 3px !important; padding-left: 14px !important; }
+  .resume-bullet  { font-size: 9.5px !important; line-height: 1.5 !important; }
 }

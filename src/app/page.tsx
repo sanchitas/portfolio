@@ -413,8 +413,8 @@ export default function Home() {
 
       {/* ─── WORK ─── */}
       <section
-        className="w-full projects-section"
-        style={{ marginTop: "clamp(16px, 2vh, 24px)", maxWidth: "min(900px, 100%)", paddingLeft: 10, paddingRight: 10 }}
+        className="w-full"
+        style={{ marginTop: "clamp(16px, 2vh, 24px)", maxWidth: "min(900px, 100%)" }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
           {projects.map((p, i) => (

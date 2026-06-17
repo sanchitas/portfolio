@@ -21,7 +21,7 @@ export default function ResumePage() {
     >
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
-        <header style={{ marginBottom: 20 }}>
+        <header className="resume-header" style={{ marginBottom: 20 }}>
           <h1
             className="resume-name"
             style={{
@@ -37,7 +37,7 @@ export default function ResumePage() {
           >
             Sanchita Chamberlain
           </h1>
-          <p className="font-mono" style={{ marginTop: 10, fontSize: 12, color: "var(--fg-muted)", letterSpacing: "0.02em" }}>
+          <p className="font-mono resume-contact" style={{ marginTop: 10, fontSize: 12, color: "var(--fg-muted)", letterSpacing: "0.02em" }}>
             <span style={{ fontWeight: 600, color: "var(--fg)" }}>Product Designer</span>
             {" · "}
             <a href="mailto:sanchitachamberlain@gmail.com">
@@ -54,7 +54,7 @@ export default function ResumePage() {
           </p>
         </header>
 
-        <hr style={{ border: "none", borderTop: "1px solid var(--border-mid)", marginBottom: 20 }} />
+        <hr className="resume-divider" style={{ border: "none", borderTop: "1px solid var(--border-mid)", marginBottom: 20 }} />
 
         {/* Experience */}
         <section className="resume-experience" style={{ marginBottom: 48 }}>
