@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
       await put(BLOB_PATH, JSON.stringify({ city, region, country, timestamp } satisfies VisitorData), {
         access: 'public',
         addRandomSuffix: false,
+        allowOverwrite: true,
         contentType: 'application/json',
       });
     } catch {
