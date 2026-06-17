@@ -197,6 +197,10 @@ body {
 }
 
 @media print {
+  @page {
+    size: letter;
+    margin: 0.65in 0.85in;
+  }
   :root,
   [data-theme="dark"] {
     --bg: #fff;
@@ -209,7 +213,29 @@ body {
   body {
     background-color: #fff !important;
   }
+  .resume-main {
+    padding: 0 !important;
+  }
   .resume-name {
     font-size: 40px !important;
+  }
+  .resume-experience {
+    margin-bottom: 20px !important;
+  }
+  .resume-job {
+    margin-bottom: 20px !important;
+  }
+  .resume-job-header {
+    margin-bottom: 10px !important;
+  }
+  .resume-section-title {
+    margin-bottom: 10px !important;
+  }
+  .resume-bullets {
+    gap: 8px !important;
+  }
+  .resume-bullet {
+    font-size: 12px !important;
+    line-height: 1.65 !important;
   }
 }

@@ -10,8 +10,14 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <main
-      className="min-h-screen px-5 pt-20 pb-12 sm:px-10 sm:pt-28 sm:pb-16 print:!p-0"
-      style={{ backgroundColor: "var(--bg)" }}
+      className="min-h-screen resume-main"
+      style={{
+        backgroundColor: "var(--bg)",
+        paddingTop: "clamp(64px, 9vw, 104px)",
+        paddingBottom: 48,
+        paddingLeft: "clamp(20px, 5vw, 40px)",
+        paddingRight: "clamp(20px, 5vw, 40px)",
+      }}
     >
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
@@ -38,19 +44,11 @@ export default function ResumePage() {
               sanchitachamberlain@gmail.com
             </a>
             {" · "}
-            <a
-              href="https://linkedin.com/in/sanchitachamberlain"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://linkedin.com/in/sanchitachamberlain" target="_blank" rel="noopener noreferrer">
               /in/sanchitachamberlain
             </a>
             {" · "}
-            <a
-              href="https://sanchitachamberlain.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://sanchitachamberlain.com" target="_blank" rel="noopener noreferrer">
               sanchitachamberlain.com
             </a>
           </p>
@@ -59,13 +57,16 @@ export default function ResumePage() {
         <hr style={{ border: "none", borderTop: "1px solid var(--border-mid)", marginBottom: 20 }} />
 
         {/* Experience */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 20, fontWeight: 700 }}>
+        <section className="resume-experience" style={{ marginBottom: 48 }}>
+          <h2
+            className="font-mono resume-section-title"
+            style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 20, fontWeight: 700 }}
+          >
             Experience
           </h2>
 
-          <div style={{ marginBottom: 48 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
+          <div className="resume-job" style={{ marginBottom: 48 }}>
+            <div className="resume-job-header" style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
               <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)", margin: 0 }}>
                 HashiCorp / IBM
                 <span style={{ fontWeight: 400, color: "var(--fg-faint)" }}>
@@ -76,7 +77,7 @@ export default function ResumePage() {
                 Feb 2023 – Present
               </span>
             </div>
-            <ul style={{ listStyleType: "disc", paddingLeft: 24, margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
+            <ul className="resume-bullets font-mono" style={{ listStyleType: "disc", paddingLeft: 24, margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
               <Li>
                 Turned rough enterprise requirements into three phased deliverables
                 (usage → visibility → ownership), shipping two phases in two quarters
@@ -124,8 +125,8 @@ export default function ResumePage() {
             </ul>
           </div>
 
-          <div style={{ marginBottom: 48 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
+          <div className="resume-job" style={{ marginBottom: 48 }}>
+            <div className="resume-job-header" style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
               <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)", margin: 0 }}>
                 Fastly
                 <span style={{ fontWeight: 400, color: "var(--fg-faint)" }}>
@@ -136,7 +137,7 @@ export default function ResumePage() {
                 Jan 2017 – Feb 2023
               </span>
             </div>
-            <ul style={{ listStyleType: "disc", paddingLeft: 24, margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
+            <ul className="resume-bullets font-mono" style={{ listStyleType: "disc", paddingLeft: 24, margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
               <Li>
                 Doubled sign-up conversion from <Metric>13.6% to 26.5%</Metric> YoY
                 by separating conflicting sales lead-gen and self-serve acquisition
@@ -157,7 +158,8 @@ export default function ResumePage() {
                 secure feature enablement by <Metric>23%</Metric>
               </Li>
               <Li>
-                Spent the first year at Fastly in <strong style={{ fontWeight: 700, color: "var(--fg)" }}>customer support engineering</strong>,
+                Spent the first year at Fastly in{" "}
+                <strong style={{ fontWeight: 700, color: "var(--fg)" }}>customer support engineering</strong>,
                 troubleshooting production traffic and edge behavior for enterprise
                 customers, before moving into product design.
               </Li>
@@ -167,7 +169,10 @@ export default function ResumePage() {
 
         {/* Education */}
         <section>
-          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>
+          <h2
+            className="font-mono resume-section-title"
+            style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}
+          >
             Education
           </h2>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px" }}>
@@ -183,8 +188,9 @@ export default function ResumePage() {
           </p>
         </section>
 
-        {/* Print / download footer */}
+        {/* Footer — hidden when printing */}
         <div
+          className="print:!hidden"
           style={{
             marginTop: 80,
             paddingTop: 32,
@@ -194,7 +200,6 @@ export default function ResumePage() {
             alignItems: "center",
             justifyContent: "space-between",
           }}
-          className="print:!hidden"
         >
           <a href="/" className="font-mono" style={{ fontSize: 12, color: "var(--fg-faint)" }}>
             ← Back to portfolio
@@ -206,11 +211,9 @@ export default function ResumePage() {
   );
 }
 
-/* ── Tiny helper components ── */
-
 function Li({ children }: { children: React.ReactNode }) {
   return (
-    <li className="font-mono" style={{ fontSize: 13, lineHeight: 1.8, color: "var(--fg-muted)", margin: 0, padding: 0 }}>
+    <li className="resume-bullet" style={{ fontSize: 13, lineHeight: 1.8, color: "var(--fg-muted)", margin: 0, padding: 0 }}>
       {children}
     </li>
   );
@@ -218,6 +221,6 @@ function Li({ children }: { children: React.ReactNode }) {
 
 function Metric({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-mono" style={{ fontWeight: 600, color: "var(--fg)" }}>{children}</span>
+    <span style={{ fontWeight: 600, color: "var(--fg)" }}>{children}</span>
   );
 }
