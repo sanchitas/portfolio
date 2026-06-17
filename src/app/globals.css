@@ -73,7 +73,6 @@ html {
 }
 
 body {
-  /* iOS rubber-band overscroll uses body's background-color — #CCFF00 so it matches desktop */
   background-color: #CCFF00;
   border: none;
   outline: none;
@@ -86,6 +85,11 @@ body {
   transition: color 0.2s ease;
 }
 
+@media (max-width: 768px) {
+  body {
+    background-color: var(--bg);
+  }
+}
 
 .project-row {
   display: flex;
