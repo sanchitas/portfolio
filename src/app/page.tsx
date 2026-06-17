@@ -317,12 +317,19 @@ export default function Home() {
           width: "100%",
           maxWidth: "min(900px, 100%)",
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "clamp(20px, 3vh, 32px)",
         }}
       >
-        {lastVisitorLabel && (
+        {/* Always occupies left space so toggle stays pinned right */}
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            opacity: lastVisitorLabel ? 1 : 0,
+            transition: "opacity 0.6s ease",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: 8, paddingLeft: 10 }}>
             <span
               style={{
@@ -338,10 +345,10 @@ export default function Home() {
               className="font-mono"
               style={{ fontSize: 10, color: "var(--fg-muted)", margin: 0, lineHeight: 1.5 }}
             >
-              {lastVisitorLabel}
+              {lastVisitorLabel ?? ""}
             </p>
           </div>
-        )}
+        </div>
         <button
           onClick={toggleTheme}
           className="font-mono"
