@@ -195,3 +195,21 @@ body {
   0%, 100% { opacity: 0.25; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.35); }
 }
+
+@media print {
+  :root,
+  [data-theme="dark"] {
+    --bg: #fff;
+    --fg: #000;
+    --fg-muted: rgba(0, 0, 0, 0.6);
+    --fg-faint: rgba(0, 0, 0, 0.45);
+    --border: rgba(0, 0, 0, 0.1);
+    --border-mid: rgba(0, 0, 0, 0.15);
+  }
+  body {
+    background-color: #fff !important;
+  }
+  .resume-name {
+    font-size: 40px !important;
+  }
+}

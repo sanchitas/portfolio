@@ -9,20 +9,32 @@ export const metadata: Metadata = {
 
 export default function ResumePage() {
   return (
-    <main className="min-h-screen bg-white px-5 pt-20 pb-12 sm:px-10 sm:pt-28 sm:pb-16 print:!p-0">
+    <main
+      className="min-h-screen px-5 pt-20 pb-12 sm:px-10 sm:pt-28 sm:pb-16 print:!p-0"
+      style={{ backgroundColor: "var(--bg)" }}
+    >
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         {/* Header */}
         <header style={{ marginBottom: 20 }}>
-          <h1 style={{ fontFamily: "'Enquix', var(--font-bebas), sans-serif", fontSize: "clamp(18px, 3.2vw, 30px)", letterSpacing: "-0.01em", lineHeight: 1, color: "#000", textTransform: "uppercase", margin: 0, fontWeight: 400, whiteSpace: "nowrap" }}>
+          <h1
+            className="resume-name"
+            style={{
+              fontFamily: "'Enquix', var(--font-bebas), sans-serif",
+              fontSize: "clamp(36px, 5.5vw, 56px)",
+              letterSpacing: "-0.01em",
+              lineHeight: 1,
+              color: "var(--fg)",
+              textTransform: "uppercase",
+              margin: 0,
+              fontWeight: 400,
+            }}
+          >
             Sanchita Chamberlain
           </h1>
-          <p className="font-mono" style={{ marginTop: 8, fontSize: 12, color: "#666", letterSpacing: "0.02em" }}>
-            <span style={{ fontWeight: 600, color: "#000" }}>Product Designer</span>
+          <p className="font-mono" style={{ marginTop: 10, fontSize: 12, color: "var(--fg-muted)", letterSpacing: "0.02em" }}>
+            <span style={{ fontWeight: 600, color: "var(--fg)" }}>Product Designer</span>
             {" · "}
-            <a
-              href="mailto:sanchitachamberlain@gmail.com"
-              className="hover:text-black transition-colors"
-            >
+            <a href="mailto:sanchitachamberlain@gmail.com">
               sanchitachamberlain@gmail.com
             </a>
             {" · "}
@@ -30,7 +42,6 @@ export default function ResumePage() {
               href="https://linkedin.com/in/sanchitachamberlain"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-black transition-colors"
             >
               /in/sanchitachamberlain
             </a>
@@ -39,30 +50,29 @@ export default function ResumePage() {
               href="https://sanchitachamberlain.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-black transition-colors"
             >
               sanchitachamberlain.com
             </a>
           </p>
         </header>
 
-        <hr style={{ border: "none", borderTop: "1px solid #e5e5e5", marginBottom: 20 }} />
+        <hr style={{ border: "none", borderTop: "1px solid var(--border-mid)", marginBottom: 20 }} />
 
         {/* Experience */}
         <section style={{ marginBottom: 48 }}>
-          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 20, fontWeight: 700 }}>
+          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 20, fontWeight: 700 }}>
             Experience
           </h2>
 
           <div style={{ marginBottom: 48 }}>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
-              <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "#000", margin: 0 }}>
+              <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)", margin: 0 }}>
                 HashiCorp / IBM
-                <span style={{ fontWeight: 400, color: "#888" }}>
+                <span style={{ fontWeight: 400, color: "var(--fg-faint)" }}>
                   {" · "}Lead Product Designer
                 </span>
               </h3>
-              <span className="font-mono" style={{ fontSize: 12, color: "#aaa" }}>
+              <span className="font-mono" style={{ fontSize: 12, color: "var(--fg-faint)" }}>
                 Feb 2023 – Present
               </span>
             </div>
@@ -116,13 +126,13 @@ export default function ResumePage() {
 
           <div style={{ marginBottom: 48 }}>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px", marginBottom: 20 }}>
-              <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "#000", margin: 0 }}>
+              <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)", margin: 0 }}>
                 Fastly
-                <span style={{ fontWeight: 400, color: "#888" }}>
+                <span style={{ fontWeight: 400, color: "var(--fg-faint)" }}>
                   {" · "}Senior Product Designer
                 </span>
               </h3>
-              <span className="font-mono" style={{ fontSize: 12, color: "#aaa" }}>
+              <span className="font-mono" style={{ fontSize: 12, color: "var(--fg-faint)" }}>
                 Jan 2017 – Feb 2023
               </span>
             </div>
@@ -147,7 +157,7 @@ export default function ResumePage() {
                 secure feature enablement by <Metric>23%</Metric>
               </Li>
               <Li>
-                Spent the first year at Fastly in <strong style={{ fontWeight: 700, color: "#000" }}>customer support engineering</strong>,
+                Spent the first year at Fastly in <strong style={{ fontWeight: 700, color: "var(--fg)" }}>customer support engineering</strong>,
                 troubleshooting production traffic and edge behavior for enterprise
                 customers, before moving into product design.
               </Li>
@@ -157,29 +167,36 @@ export default function ResumePage() {
 
         {/* Education */}
         <section>
-          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "#000", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>
+          <h2 className="font-mono" style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>
             Education
           </h2>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0 16px" }}>
-            <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "#000", margin: 0 }}>
+            <h3 className="font-mono" style={{ fontSize: 14, fontWeight: 600, color: "var(--fg)", margin: 0 }}>
               B.S. Industrial & Systems Engineering
-              <span style={{ fontWeight: 400, color: "#888" }}>
+              <span style={{ fontWeight: 400, color: "var(--fg-faint)" }}>
                 {" — "}Rutgers University
               </span>
             </h3>
           </div>
-          <p className="font-mono" style={{ fontSize: 12, color: "#888", marginTop: 6 }}>
+          <p className="font-mono" style={{ fontSize: 12, color: "var(--fg-faint)", marginTop: 6 }}>
             Co-op: Johnson & Johnson · Internship: TSYS
           </p>
         </section>
 
         {/* Print / download footer */}
-        <div style={{ marginTop: 80, paddingTop: 32, paddingBottom: 48, borderTop: "1px solid #f0f0f0", display: "flex", alignItems: "center", justifyContent: "space-between" }} className="print:!hidden">
-          <a
-            href="/"
-            className="font-mono"
-            style={{ fontSize: 12, color: "#aaa" }}
-          >
+        <div
+          style={{
+            marginTop: 80,
+            paddingTop: 32,
+            paddingBottom: 48,
+            borderTop: "1px solid var(--border)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+          className="print:!hidden"
+        >
+          <a href="/" className="font-mono" style={{ fontSize: 12, color: "var(--fg-faint)" }}>
             ← Back to portfolio
           </a>
           <ResumePDFActions />
@@ -193,7 +210,7 @@ export default function ResumePage() {
 
 function Li({ children }: { children: React.ReactNode }) {
   return (
-    <li className="font-mono" style={{ fontSize: 13, lineHeight: 1.8, color: "#444", margin: 0, padding: 0 }}>
+    <li className="font-mono" style={{ fontSize: 13, lineHeight: 1.8, color: "var(--fg-muted)", margin: 0, padding: 0 }}>
       {children}
     </li>
   );
@@ -201,6 +218,6 @@ function Li({ children }: { children: React.ReactNode }) {
 
 function Metric({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-mono font-semibold text-black">{children}</span>
+    <span className="font-mono" style={{ fontWeight: 600, color: "var(--fg)" }}>{children}</span>
   );
 }
