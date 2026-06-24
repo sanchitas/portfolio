@@ -94,26 +94,26 @@ export default function ResumePage() {
                 a <Metric>$20M</Metric> bank migration
               </Li>
               <Li>
-                Drove adoption of a tag-based access control architecture across
-                HashiCorp's Infrastructure product line — binding registry artifacts to
-                projects for usage and visibility control without platform-level RBAC;{" "}
-                <Metric>two teams</Metric> building on it and counting
+                Drove adoption of a tag-based access control information architecture
+                across HashiCorp's Infrastructure product line — binding registry
+                artifacts to projects for usage and visibility control without
+                platform-level RBAC; <Metric>two teams</Metric> building on it and counting
               </Li>
               <Li>
                 Designed and shipped the first bulk action UI across all of Terraform
-                using existing design system components;{" "}
+                using existing Figma design system components;{" "}
                 <Metric>two adjacent teams</Metric> now building on it as a platform
                 standard
               </Li>
               <Li>
-                Identified and documented design debt blocking every new feature;
+                Identified and documented UX design debt blocking every new feature;
                 presented joint design-engineering recommendation to leadership that
                 reshaped the team's roadmap and secured{" "}
                 <Metric>4 engineers</Metric> and a dedicated quarter
               </Li>
               <Li>
-                Owned the research program from scratch — mapped Gong, Salesforce, and
-                support data into a reusable guide; ran an{" "}
+                Owned the UX research program from scratch — mapped Gong, Salesforce,
+                and support data into a reusable research guide; ran an{" "}
                 <Metric>11,000-person survey</Metric> (
                 <Metric>59% completion rate</Metric>) that drove roadmap
                 prioritization; infrastructure inherited by newly hired UXR team
@@ -123,7 +123,7 @@ export default function ResumePage() {
                 <Metric>1M+ monthly visitors</Metric> and{" "}
                 <Metric>16B all-time downloads</Metric>; got buy-in from leadership,
                 shipped a public registry reskin in{" "}
-                <Metric>under 2 weeks</Metric> with coding agents, then mocked the
+                <Metric>under 2 weeks</Metric> with coding agents, then prototyped the
                 authenticated vision that became new hire and intern projects
               </Li>
               <Li>
@@ -193,7 +193,21 @@ export default function ResumePage() {
             </h3>
           </div>
           <p className="font-mono" style={{ fontSize: 12, color: "var(--fg-faint)", marginTop: 6 }}>
-            Co-op: Johnson & Johnson · Internship: TSYS
+            Co-op: Johnson &amp; Johnson · Internship: TSYS
+          </p>
+        </section>
+
+        {/* Skills */}
+        <hr className="resume-divider" style={{ border: "none", borderTop: "1px solid var(--border-mid)", marginTop: 20, marginBottom: 20 }} />
+        <section className="resume-skills" style={{ marginBottom: 0 }}>
+          <h2
+            className="font-mono resume-section-title"
+            style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 12, fontWeight: 700 }}
+          >
+            Skills
+          </h2>
+          <p className="font-mono resume-skills-list" style={{ fontSize: 13, lineHeight: 1.8, color: "var(--fg-muted)" }}>
+            Figma · design systems · UX research · interaction design · information architecture · developer tooling · CLI/API design · agentic workflows · cross-functional leadership · stakeholder alignment · mentorship &amp; coaching · workshop facilitation · 0-to-1 product design
           </p>
         </section>
 

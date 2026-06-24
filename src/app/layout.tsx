@@ -62,10 +62,25 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();`,
           }}
         />
-        {/* Preload overscroll background so it's ready before rubber-band */}
+        {/* Preload overscroll background so it's ready before elastic scroll */}
         <link rel="preload" href="/magnific-waves-bg.jpg" as="image" />
       </head>
       <body className="min-h-screen flex flex-col">
+        {/* Fixed behind all content — stays in place while page bounces during elastic/rubber-band scroll,
+            revealing the waves to all browsers, not just Safari */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: -50,
+            pointerEvents: 'none',
+            backgroundImage: "url('/magnific-waves-bg.jpg')",
+            backgroundSize: '100% auto',
+            backgroundRepeat: 'repeat',
+            backgroundColor: 'var(--bg)',
+          }}
+        />
         {children}
       </body>
     </html>
