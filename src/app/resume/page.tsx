@@ -177,7 +177,7 @@ export default function ResumePage() {
         </section>
 
         {/* Education */}
-        <section className="resume-edu">
+        <section className="resume-edu" style={{ marginBottom: 48 }}>
           <h2
             className="font-mono resume-section-title"
             style={{ fontSize: 22, letterSpacing: "0.01em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}
@@ -198,7 +198,6 @@ export default function ResumePage() {
         </section>
 
         {/* Skills */}
-        <hr className="resume-divider" style={{ border: "none", borderTop: "1px solid var(--border-mid)", marginTop: 20, marginBottom: 20 }} />
         <section className="resume-skills" style={{ marginBottom: 0 }}>
           <h2
             className="font-mono resume-section-title"
@@ -206,7 +205,7 @@ export default function ResumePage() {
           >
             Skills
           </h2>
-          <p className="font-mono resume-skills-list" style={{ fontSize: 13, lineHeight: 1.8, color: "var(--fg-muted)" }}>
+          <p className="font-mono resume-skills-list" style={{ fontSize: 12, lineHeight: 1.8, color: "var(--fg-faint)" }}>
             Figma · design systems · UX research · interaction design · information architecture · developer tooling · CLI/API design · agentic workflows · cross-functional leadership · stakeholder alignment · mentorship &amp; coaching · workshop facilitation · 0-to-1 product design
           </p>
         </section>

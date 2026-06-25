@@ -218,8 +218,9 @@ body {
   .resume-contact { font-size: 10px !important; margin-top: 6px !important; }
   .resume-divider { margin-top: 12px !important; margin-bottom: 16px !important; }
 
-  .resume-skills        { margin-bottom: 14px !important; }
-  .resume-skills-list   { font-size: 10px !important; line-height: 1.6 !important; }
+  .resume-edu           { margin-bottom: 12px !important; }
+  .resume-skills        { margin-bottom: 0 !important; }
+  .resume-skills-list   { font-size: 9.5px !important; line-height: 1.5 !important; }
 
   .resume-experience    { margin-bottom: 20px !important; }
   .resume-section-title { font-size: 14px !important; margin-bottom: 10px !important; }
