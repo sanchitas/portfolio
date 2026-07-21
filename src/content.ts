@@ -4,7 +4,7 @@
 
 export const siteConfig = {
   name: "Sanchita Chamberlain",
-  title: "Staff Product Designer",
+  title: "Product Designer",
   location: "San Rafael, CA",
   available: true,
 };
@@ -27,7 +27,7 @@ export const about = {
     currently:
       "Product Designer, HashiCorp (IBM)\nTerraform Registry · Publisher Experience",
     targeting:
-      "Staff IC roles at the intersection of\nAI, developer tools & infrastructure",
+      "IC roles at the intersection of\nAI, developer tools & infrastructure",
     background:
       "Industrial & Systems Engineering, Rutgers\n12 years in enterprise & platform design",
   },

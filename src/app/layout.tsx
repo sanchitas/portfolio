@@ -25,11 +25,11 @@ export const metadata: Metadata = {
   title: "Sanchita Chamberlain",
   icons: { icon: '/favicon.png', shortcut: '/favicon.png' },
   description:
-    "Staff Product Designer. I design the system around the product — the phasing, the architecture, the cross-functional alignment that makes it shippable.",
+    "Product Designer. I design the system around the product — the phasing, the architecture, the cross-functional alignment that makes it shippable.",
   openGraph: {
     title: "Sanchita Chamberlain",
     description:
-      "Staff Product Designer at IBM (ex-HashiCorp). Infrastructure design that ships.",
+      "Product Designer at IBM (ex-HashiCorp). 12+ years in B2B SaaS, 9 in developer tools. Infrastructure design that ships.",
     url: "https://sanchitachamberlain.com",
     siteName: "Sanchita Chamberlain",
     type: "website",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Sanchita Chamberlain",
     description:
-      "Staff Product Designer. Infrastructure design that ships.",
+      "Product Designer. 12+ years in B2B SaaS, 9 in developer tools. Infrastructure design that ships.",
     images: ["/favicon.png"],
   },
 };
