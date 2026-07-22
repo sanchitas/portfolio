@@ -47,7 +47,7 @@ export default function ResumePage() {
             Sanchita Chamberlain
           </h1>
           <p className="font-mono resume-contact" style={{ marginTop: 10, fontSize: 12, color: "var(--fg-muted)", letterSpacing: "0.02em" }}>
-            <span style={{ fontWeight: 600, color: "var(--fg)" }}>Product Designer</span>
+            <span style={{ fontWeight: 600, color: "var(--fg)" }}>Senior / Staff Product Designer</span>
             {" · "}
             <a href="mailto:sanchitachamberlain@gmail.com">
               sanchitachamberlain@gmail.com
@@ -107,7 +107,7 @@ export default function ResumePage() {
               </Li>
               <Li>
                 Identified and documented UX design debt blocking every new feature;
-                presented joint design-engineering recommendation to leadership that
+                presented joint product-design-engineering recommendation to leadership that
                 reshaped the team's roadmap and secured{" "}
                 <Metric>4 engineers</Metric> and a dedicated quarter
               </Li>
@@ -119,7 +119,7 @@ export default function ResumePage() {
                 prioritization; infrastructure inherited by newly hired UXR team
               </Li>
               <Li>
-                Defined registry unification strategy for a platform serving{" "}
+                Defined registry unification UX strategy for a platform serving{" "}
                 <Metric>1M+ monthly visitors</Metric> and{" "}
                 <Metric>16B all-time downloads</Metric>; got buy-in from leadership,
                 shipped a public registry reskin in{" "}
@@ -127,8 +127,8 @@ export default function ResumePage() {
                 authenticated vision that became new hire and intern projects
               </Li>
               <Li>
-                Coached a designer through <Metric>two promotions</Metric>; currently
-                mentoring a PM intern whose PRDs were called excellent by Head of Product,
+                Coached a designer through <Metric>two promotions</Metric>; mentoring a
+                PM intern whose PRDs were called excellent by Head of Product,
                 earning a return offer
               </Li>
             </ul>
