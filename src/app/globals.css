@@ -20,7 +20,8 @@
   --bg: #fff;
   --fg: #111;
   --fg-muted: rgba(0, 0, 0, 0.55);
-  --fg-faint: rgba(0, 0, 0, 0.32);
+  /* was 0.32 (~2.25:1, fails WCAG AA) — raised to clear 4.5:1 for small/meta text */
+  --fg-faint: rgba(0, 0, 0, 0.58);
   --border: rgba(0, 0, 0, 0.08);
   --border-mid: rgba(0, 0, 0, 0.1);
   --surface: #f0ede8;
@@ -31,7 +32,8 @@
   --bg: #111;
   --fg: #ededed;
   --fg-muted: rgba(255, 255, 255, 0.5);
-  --fg-faint: rgba(255, 255, 255, 0.3);
+  /* was 0.3 (~2.67:1, fails WCAG AA) — raised to clear 4.5:1 for small/meta text */
+  --fg-faint: rgba(255, 255, 255, 0.5);
   --border: rgba(255, 255, 255, 0.08);
   --border-mid: rgba(255, 255, 255, 0.1);
   --surface: #1c1c1c;
@@ -63,7 +65,13 @@ img::selection, video::selection, canvas::selection {
 
 html {
   scroll-behavior: smooth;
+  /* Desktop overscroll zone shows the waves image; var(--bg) keeps it seamless with page content.
+     Must live on html (not a fixed div) — Safari's rubber-band gutter paints from the root's
+     canvas background, not from ordinary DOM content. */
   background-color: var(--bg);
+  background-image: url('/magnific-waves-bg.jpg');
+  background-size: 100% auto;
+  background-repeat: repeat;
   border: none;
   outline: none;
 }

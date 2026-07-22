@@ -63,7 +63,7 @@ function ProjectMedia({ p }: { p: Project }) {
       ref={containerRef}
       className="w-full rounded-md overflow-hidden"
       style={{
-        aspectRatio: "16 / 9",
+        aspectRatio: "4 / 3",
         backgroundColor: isBrand ? "#fff" : "var(--surface)",
         border: "1px solid var(--border)",
         position: "relative",
@@ -261,7 +261,7 @@ function HeroName() {
         ref={h1Ref}
         style={{
           fontFamily: "'Enquix', var(--font-bebas), sans-serif",
-          fontSize: "10px",
+          fontSize: "clamp(32px, 11vw, 130px)",
           letterSpacing: "-0.01em",
           lineHeight: 0.88,
           color: "var(--fg)",
@@ -332,7 +332,7 @@ export default function Home() {
             transition: "opacity 0.6s ease",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 8, paddingLeft: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span
               style={{
                 flexShrink: 0,
@@ -374,7 +374,7 @@ export default function Home() {
       <HeroName />
 
       {/* ── Intro ── */}
-      <div style={{ width: "100%", maxWidth: "min(900px, 100%)", paddingLeft: 10, marginTop: "clamp(20px, 3vh, 32px)" }}>
+      <div style={{ width: "100%", maxWidth: "min(900px, 100%)", marginTop: "clamp(20px, 3vh, 32px)" }}>
         <p
           className="font-mono"
           style={{ fontSize: "clamp(14px, 1.6vw, 17px)", lineHeight: 1.75, color: "var(--fg-muted)" }}
@@ -390,7 +390,6 @@ export default function Home() {
           maxWidth: "min(900px, 100%)",
           display: "flex",
           gap: 36,
-          paddingLeft: 10,
           marginTop: "clamp(20px, 3vh, 28px)",
           marginBottom: "clamp(24px, 3vh, 32px)",
         }}

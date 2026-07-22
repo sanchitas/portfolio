@@ -89,18 +89,6 @@ export const projects: Project[] = [
     video: "bulk-tagging.mp4",
     placeholder: "Projects → Registry bulk tag assignment flow",
   },
-  {
-    year: "2014–2025",
-    title: "Award-Winning Merch Design",
-    company: "Personal",
-    description:
-      "Do merch design on the side, including a first-place t-shirt design contest win last year.",
-    tags: ["Brand", "Illustration"],
-    link: "https://www.instagram.com/p/DQSaZ0gksMN/?img_index=18",
-    linkLabel: "Link",
-    image: "merch-harding.png",
-    placeholder: "BP Open logo",
-  },
   // ─── Row 3: video + video ───
   {
     year: "2021",
@@ -111,16 +99,6 @@ export const projects: Project[] = [
     tags: ["Enterprise", "0→1"],
     video: "fastly-rbac.mp4",
     placeholder: "RBAC role management walkthrough",
-  },
-  {
-    year: "2025",
-    title: "Design Your Life",
-    company: "HashiCorp / IBM",
-    description:
-      "A hands-on career-path workshop for summer interns. Rated 20/10. Helped software engineers, product managers, and product designers build confidence around career choices, growth plans, and long-term direction.",
-    tags: ["Mentorship", "Leadership"],
-    image: "interns-workshop.jpg",
-    placeholder: "Intern workshop photo",
   },
   {
     year: "2025",
@@ -170,5 +148,28 @@ export const projects: Project[] = [
     link: "https://developer.hashicorp.com/terraform/language/block/stack/tfcomponent",
     linkLabel: "Docs",
     placeholder: "Stack component configuration publish flow",
+  },
+  // ─── Closing: non-work + mentoring ───
+  {
+    year: "2014–2025",
+    title: "Award-Winning Merch Design",
+    company: "Personal",
+    description:
+      "Do merch design on the side, including a first-place t-shirt design contest win last year.",
+    tags: ["Brand", "Illustration"],
+    link: "https://www.instagram.com/p/DQSaZ0gksMN/?img_index=18",
+    linkLabel: "Link",
+    image: "merch-harding.png",
+    placeholder: "BP Open logo",
+  },
+  {
+    year: "2025",
+    title: "Design Your Life",
+    company: "HashiCorp / IBM",
+    description:
+      "A hands-on career-path workshop for summer interns. Rated 20/10. Helped software engineers, product managers, and product designers build confidence around career choices, growth plans, and long-term direction.",
+    tags: ["Mentorship", "Leadership"],
+    image: "interns-workshop.jpg",
+    placeholder: "Intern workshop photo",
   },
 ];
