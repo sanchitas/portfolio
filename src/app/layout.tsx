@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sanchita Chamberlain",
     description:
-      "Product Designer at IBM (ex-HashiCorp). 12+ years in B2B SaaS, 9 in developer tools. Infrastructure design that ships.",
+      "Product Designer at IBM (ex-HashiCorp). 12+ years in B2B enterprise, 9 in SaaS developer tools. Infrastructure design that ships.",
     url: "https://sanchitachamberlain.com",
     siteName: "Sanchita Chamberlain",
     type: "website",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Sanchita Chamberlain",
     description:
-      "Product Designer. 12+ years in B2B SaaS, 9 in developer tools. Infrastructure design that ships.",
+      "Product Designer. 12+ years in B2B enterprise, 9 in SaaS developer tools. Infrastructure design that ships.",
     images: ["/favicon.png"],
   },
 };
